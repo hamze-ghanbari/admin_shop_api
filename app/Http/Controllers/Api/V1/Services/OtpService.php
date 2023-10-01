@@ -16,7 +16,6 @@ use App\Repository\Contracts\UserRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
 class OtpService
@@ -69,9 +68,6 @@ class OtpService
                 'hasError' => true,
                 'result' => null
             ], 419);
-//            return $request->ajax()
-//                ? Response::postError(route('auth.show-otp-form'), $errorMessage)
-//                : redirect()->route('auth.show-otp-form')->withErrors([config('auth_module.inputs.user_name') => $errorMessage]);
         }
 
         return [
@@ -84,14 +80,14 @@ class OtpService
     public function createUser($newUser)
     {
         $newUser['activation'] = ActivationEnum::UserActive->value;
-        $user = $this->userRepository->create($newUser);
-        return $user;
+        return $this->userRepository->create($newUser);
     }
 
     public function createOtp($userId, $userName, $type): Otp
     {
         $otpCode = substr(rand(0, microtime(true)), 0, 5);
         $token = Str::random(60);
+
         return $this->otpRepository->create([
             'token' => $token,
             'user_id' => $userId,
@@ -114,7 +110,7 @@ class OtpService
 
     public function getOtpWithUser($token)
     {
-        return $this->otpRepository->with('user')->where('token', $token)->first();
+        return $this->otpRepository->findWhere(['token' => $token])->first();
     }
 
     public function updateOtpCode($otp)
@@ -146,8 +142,8 @@ class OtpService
     public function userLogin($user)
     {
 //        Auth::check()
-//          Auth::login($user);
-        return auth()->user();
+           Auth::login($user);
+           return Auth::user();
 //        $request->session()->regenerate();
     }
 

@@ -5,17 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Enums\TypeEnum;
 use App\Http\Controllers\Api\V1\Services\OtpService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OtpCollection;
-use App\Http\Resources\OtpResource;
-use App\Models\Otp;
 use App\Http\Requests\OtpRequest;
-use App\Models\User;
 use App\Repository\Contracts\OtpRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 
 class OtpController extends Controller
 {
@@ -25,16 +19,6 @@ class OtpController extends Controller
         public OtpRepositoryInterface $otpRepository
     )
     {
-    }
-
-    public function ggg(){
-
-//        return (new OtpCollection($this->otpRepository->paginate(10, ['id', 'otp_code', 'login_id', 'type', 'status', 'user_id'])))
-//            ->additional([
-//                'hasError' => false
-//            ]);
-//        return OtpResource::collection($this->otpRepository->all());
-        return (new OtpResource($this->otpRepository->findOrFail(18)));
     }
 
     public function otp(OtpRequest $request)
@@ -58,7 +42,6 @@ class OtpController extends Controller
                     ], 401);
                 }
             }
-//            return response()->json([$user, $user->id, $userName, $data['type']]);
             $otp = $this->otpService->createOtp($user->id, $userName, $data['type']);
 
             DB::commit();
@@ -109,8 +92,8 @@ class OtpController extends Controller
             ], 419);
         }
 
-//        DB::beginTransaction();
-//        try {
+        DB::beginTransaction();
+        try {
 
              $this->otpService->updateOtpCode($otp);
 
@@ -122,12 +105,10 @@ class OtpController extends Controller
                 $this->otpService->userVerify($user->id, 'mobile_verified_at');
             }
 
-//            $userLoggedIn = $this->otpService->userLogin($user);
-
-            $accessToken = $user->createToken('Access Token')->plainTextToken;
+            $userLoggedIn = $this->otpService->userLogin($user);
+            $accessToken = auth()->user()->createToken('AccessToken')->accessToken;
 //            $expireAt = $accessToken->expires_at;
-//                return response()->json([auth()->user()]);
-//            DB::commit();
+            DB::commit();
             return response()->json([
                 'message' => null,
                 'status' => 200,
@@ -135,19 +116,19 @@ class OtpController extends Controller
                 'result' => [
                     'user' => $user,
                     'accessToken' => $accessToken,
-                    'expireAt' => '$expireAt'
+//                    'expireAt' => '$expireAt'
 //                    'expireAt' => Carbon::parse('$expireAt')->toDateTimeString()
                 ]
             ]);
-//        } catch (\Exception) {
-//            DB::rollBack();
+        } catch (\Exception) {
+            DB::rollBack();
             return response()->json([
                 'message' => 'خطا در برقراری ارتباط',
                 'status' => 401,
                 'hasError' => true,
                 'result' => null
             ], 401);
-//        }
+        }
     }
 
     public function resendOtpCode($token)
@@ -155,8 +136,13 @@ class OtpController extends Controller
 
         $otp = $this->otpService->getOtpWithUser($token);
 
-        if (!isset($otp) || Carbon::now()->toDateTimeString() < (new Carbon($otp->created_at))->addMinutes(config('auth_module.time'))->toDateTimeString()) {
-            return redirect()->back();
+        if (!isset($otp) || Carbon::now()->toDateTimeString() < (new Carbon($otp->created_at))->addMinutes(2)->toDateTimeString()) {
+            return response()->json([
+                'message' => null,
+                'status' => 401,
+                'hasError' => true,
+                'result' => null
+            ], 401);
         }
 
         $otpData = $this->otpService->createOtp($otp->user_id, $otp->login_id, $otp->type);
@@ -171,9 +157,7 @@ class OtpController extends Controller
             'message' => null,
             'status' => 200,
             'hasError' => false,
-            'result' => [
-                'token' => $token
-            ]
+            'result' => ['token' => $otpData->token, 'code' => $otpData->otp_code]
         ]);
 
     }
@@ -181,6 +165,7 @@ class OtpController extends Controller
     public function logout(Request $request)
     {
         $this->otpService->logOut($request);
+
         return response()->json([
             'message' => null,
             'status' => 200,
