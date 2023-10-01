@@ -6,15 +6,23 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\PermissionController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(OtpController::class)->prefix('otp')->group(function () {
+Route::fallback((function(){
+    return response()->json([
+        'status' => 404,
+        'message' => 'route not found',
+        'hasError' => true
+    ]);
+}));
+
+Route::controller(OtpController::class)->group(function () {
     Route::post('login', 'otp');
     Route::post('confirm', 'confirm');
     Route::get('resend/{token}', 'resendOtpCode');
-    Route::get('logout', 'logout');
+    Route::get('logout', 'logout')->middleware('auth:api');
 });
 
 
-Route::apiResource('users', UserController::class)->except(['update', 'store']);
+Route::middleware('auth:api')->apiResource('users', UserController::class)->except(['update', 'store']);
 Route::controller(UserController::class)->prefix('users')->group(function() {
 Route::put('{user}/birthDate', 'updateBirthDate');
 Route::put('{user}/nationalCode', 'updateNationalCode');
@@ -31,12 +39,4 @@ Route::post('roles/{role}/permissions', [RoleController::class, 'addPermissionsT
 Route::get('permissions', PermissionController::class);
 
 
-//Route::group([
-//    'middleware' => 'auth:api'
-//], function () {
-//    Route::get('logout', [OtpController::class, 'logout']);
-//    Route::get('user', [OtpController::class, 'user']);
-//});
-//Route::middleware('auth:sanctum')->group(function () {
-//Route::apiResource('users', \App\Http\Controllers\Api\V1\UserController::class);
-//});
+
