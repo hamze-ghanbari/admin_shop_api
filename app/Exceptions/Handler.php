@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,5 +31,19 @@ class Handler extends ExceptionHandler
         $this->renderable(function (Throwable $e) {
 //           return response()->json(['error' => 'Not Found'], 404);
         });
+    }
+
+    protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'messages' => 'Unauthorized',
+                'status' => Response::HTTP_UNAUTHORIZED,
+                'hasError' => true,
+                'result' => null
+            ], 401);
+        }
+
+        return redirect()->guest(route('login'));
     }
 }
