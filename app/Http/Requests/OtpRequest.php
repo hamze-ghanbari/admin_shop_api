@@ -4,10 +4,13 @@ namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
 use App\Rules\EmailPhoneRule;
+use App\Traits\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class OtpRequest extends FormRequest
 {
+    use ValidationResponse;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,7 +27,7 @@ class OtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name' => ['bail', 'required', new EmailPhoneRule(), new BlackListRule()]
+            'user_name' => ['bail', 'required', new EmailPhoneRule()]
         ];
     }
 
@@ -47,4 +50,6 @@ class OtpRequest extends FormRequest
             'user_name' => convertNumbersToEnglish($this->user_name)
         ]);
     }
+
+
 }
