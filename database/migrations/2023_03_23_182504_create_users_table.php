@@ -23,13 +23,11 @@ return new class extends Migration
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('national_code', 30)->unique()->nullable();
             $table->timestamp('birth_date')->nullable();
-            $table->string('slug', 60)->unique()->nullable();
-//            $table->string('password');
+//            $table->string('slug', 60)->unique()->nullable();
             $table->boolean('activation')->default(false)->comment('0 => inActive , 1 => active');
             $table->timestamp('activation_date')->nullable();
-            $table->tinyInteger('user_type')->default(0)->comment('0 => user, 1 => admin');
+//            $table->tinyInteger('user_type')->default(0)->comment('0 => user, 1 => admin');
             $table->boolean('status')->default(false);
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
