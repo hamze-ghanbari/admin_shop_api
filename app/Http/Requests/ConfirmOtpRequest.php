@@ -3,10 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
+use App\Traits\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConfirmOtpRequest extends FormRequest
 {
+    use ValidationResponse;
     /**
      * Determine if the user is authorized to make this request.
      */
