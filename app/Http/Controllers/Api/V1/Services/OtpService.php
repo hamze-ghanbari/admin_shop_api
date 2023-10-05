@@ -6,8 +6,8 @@ use App\Enums\ActivationEnum;
 use App\Enums\StatusEnum;
 use App\Enums\TypeEnum;
 use App\Enums\UsedEnum;
-use App\Http\Services\Message\Email\EmailService;
-use App\Http\Services\Message\MessageService;
+use App\Http\Services\MessageService\Algoritms\Email\EmailService;
+use App\Http\Services\MessageService\MessageService;
 use App\Mail\OtpMail;
 use App\Models\Otp;
 use App\Models\User;
@@ -21,8 +21,8 @@ use Illuminate\Support\Str;
 class OtpService
 {
 
-    private TypeEnum $type;
-    private User|null $user;
+    private TypeEnum $type = TypeEnum::Mobile;
+    private User|null $user = null;
 
     public function __construct(
         public OtpRepositoryInterface  $otpRepository,
@@ -50,8 +50,9 @@ class OtpService
         }
     }
 
-    public function checkUserName($userName, Request $request)
+    public function checkUserName($userName)
     {
+        $newUser = null;
         if (preg_match('/^' . config('constants.email_regex') . '$/', $userName)) {
 
            $newUser['email'] = $this->getUserByEmail($userName);
@@ -60,14 +61,6 @@ class OtpService
 
            $newUser['mobile'] = $this->getUserByMobile($userName);
 
-        } else {
-            $errorMessage = 'فرمت وارد شده معتبر نمی باشد';
-            return response()->json([
-                'message' => $errorMessage,
-                'status' => 419,
-                'hasError' => true,
-                'result' => null
-            ], 419);
         }
 
         return [
@@ -141,13 +134,10 @@ class OtpService
 
     public function userLogin($user)
     {
-//        Auth::check()
-           Auth::login($user);
-           return Auth::user();
-//        $request->session()->regenerate();
+        Auth::login($user);
     }
 
-    public function logOut($request)
+    public function logout($request)
     {
         $request->user()->token()->revoke();
     }
