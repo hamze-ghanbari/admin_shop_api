@@ -2,8 +2,6 @@
 
 namespace App\Http\Services\MessageService;
 
-use App\Http\Services\Message\Interfaces\MessageInterface;
-
 class MessageService
 {
 
