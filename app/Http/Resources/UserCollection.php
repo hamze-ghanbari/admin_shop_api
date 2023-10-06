@@ -2,27 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\ApiPaginationResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserCollection extends ResourceCollection
 {
-    public static $wrap = 'items';
+    use ApiPaginationResponse;
 
-//    public function paginationInformation($request, $paginated, $default)
-//    {
-////        unset($default['meta']['links']);
-////        unset($default['links']);
-//        return $default;
-//    }
+    public static $wrap = 'result';
 
-//    public function with(Request $request): array
-//    {
-//        return [
-//            'hasError' => false
-//        ];
-//    }
-//
     /**
      * Transform the resource collection into an array.
      *
