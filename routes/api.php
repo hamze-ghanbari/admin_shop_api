@@ -6,11 +6,12 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\PermissionController;
 use Illuminate\Support\Facades\Route;
 
-Route::fallback((function(){
+Route::fallback((function () {
     return response()->json([
         'status' => 404,
         'message' => 'route not found',
-        'hasError' => true
+        'hasError' => true,
+        'result' => null
     ]);
 }));
 
@@ -22,21 +23,31 @@ Route::controller(OtpController::class)->group(function () {
 });
 
 
-Route::middleware('auth:api')->apiResource('users', UserController::class)->except(['update', 'store']);
-Route::controller(UserController::class)->prefix('users')->group(function() {
-Route::put('{user}/birthDate', 'updateBirthDate');
-Route::put('{user}/nationalCode', 'updateNationalCode');
-Route::put('{user}/fullName',  'updateFullName');
+Route::middleware('auth:api')->apiResource('users', UserController::class)->except(['update', 'store', 'create', 'edit']);
+Route::controller(UserController::class)->middleware('auth:api')->prefix('users')->group(function () {
+
+    Route::put('edit/birthDate', 'updateBirthDate');
+    Route::put('edit/nationalCode', 'updateNationalCode');
+    Route::put('edit/fullName', 'updateFullName');
+
+    Route::get('{user}/profile', 'profile');
+
+    Route::get('{user}/roles', 'showUserRoles');
+    Route::post('{user}/roles', 'storeUserRoles');
+
+    Route::get('{user}/permissions', 'showUserPermissions');
+    Route::post('{user}/permissions', 'storeUserPermissions');
+
 });
 
-Route::apiResource('users.roles', RoleController::class)->except(['destroy', 'show', 'update']);
-Route::apiResource('roles', RoleController::class)->except('show');
-Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus']);
-
-Route::get('users/{user}/permissions', [UserController::class, 'showUserPermissions']);
-Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
-Route::post('roles/{role}/permissions', [RoleController::class, 'addPermissionsToRole']);
-Route::get('permissions', PermissionController::class);
+//
+//Route::apiResource('roles', RoleController::class)->except('show');
+//Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus']);
+//
+//Route::get('users/{user}/permissions', [UserController::class, 'showUserPermissions']);
+//Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
+//Route::post('roles/{role}/permissions', [RoleController::class, 'addPermissionsToRole']);
+//Route::get('permissions', PermissionController::class);
 
 
 
