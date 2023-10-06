@@ -30,6 +30,14 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (Throwable $e) {
 //           return response()->json(['error' => 'Not Found'], 404);
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'not found',
+                    'hasError' => true,
+                    'result' => null
+                ], 404);
+            }
         });
     }
 

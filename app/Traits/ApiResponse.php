@@ -5,11 +5,11 @@ namespace App\Traits;
 trait ApiResponse
 {
 
-    public function apiResponse(array | object $result, int $status = 200, string $message = null): \Illuminate\Http\JsonResponse
+    public function apiResponse(array | object | null $result, int $status = 200, string $message = null, $hasError = false): \Illuminate\Http\JsonResponse
     {
         $response = [];
         $response['status'] = $status;
-        $response['hasError'] = false;
+        $response['hasError'] = $hasError;
         $response['message'] = $message;
         $response['result'] = $result;
 
