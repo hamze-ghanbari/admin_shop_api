@@ -4,10 +4,12 @@ namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
 use App\Rules\NationalCodeRule;
+use App\Traits\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
+    use ValidationResponse;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -41,6 +43,7 @@ class UserRequest extends FormRequest
 
     public function messages(){
         return [
+            'national_code.required' => 'وارد کردن کد ملی الزامی است',
             'birth_date.date_format' => 'فرمت تاریخ معتبر نمی باشد'
         ];
     }

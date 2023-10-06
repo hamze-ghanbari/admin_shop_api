@@ -32,7 +32,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
 //        'password',
-        'remember_token',
+//        'remember_token',
     ];
 
     /**
@@ -46,31 +46,11 @@ class User extends Authenticatable
         'birth_date' => PersianDateCast::class,
     ];
 
-//
-//    protected function fullName(): Attribute
-//    {
+//    protected function createdAt(): Attribute{
 //        return Attribute::make(
-//            get: function(){
-//                if (isset($this->attributes['first_name']) && isset($this->attributes['last_name'])) {
-//                    return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
-//
-//                } elseif (isset($this->attributes['first_name'])) {
-//                    return $this->attributes['first_name'];
-//
-//                } elseif (isset($this->attributes['last_name'])) {
-//                    return $this->attributes['last_name'];
-//                } else {
-//                    return '-----';
-//                }
-//            }
+//            get: fn (string $value) =>  jalaliDate($value)
 //        );
 //    }
-
-    protected function createdAt(): Attribute{
-        return Attribute::make(
-            get: fn (string $value) =>  jalaliDate($value)
-        );
-    }
 
     public function roles()
     {
