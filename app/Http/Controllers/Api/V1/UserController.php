@@ -10,10 +10,12 @@ use App\Http\Resources\RoleCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Traits\ApiResponse;
+use App\Traits\ValidationResponse;
 
 class UserController extends Controller
 {
+    use ApiResponse, ValidationResponse;
 
     public function __construct(
         public UserService $userService,
@@ -21,93 +23,83 @@ class UserController extends Controller
     {
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        return new UserCollection($this->userService->getSearchUsers($request));
+        return new UserCollection($this->userService->allUsers());
     }
 
     public function show(User $user)
     {
-        return new UserResource($user);
+        // admin permission
+        return $this->apiResponse(new UserResource($user));
     }
 
-
-    public function updateBirthDate(UserRequest $request, User $user)
+    public function profile(User $user)
     {
-        $updated = $this->userService->updateProfile($request->only('birth_date'), $user->id);
+        if ($user->id !== auth()->user()->id) {
+            return $this->failedValidationResponse('forbidden', 403);
+        }
+        return $this->apiResponse(auth()->user());
+    }
+
+    public function updateBirthDate(UserRequest $request)
+    {
+        $updated = $this->userService->updateProfile($request->only('birth_date'), $request->user()->id);
         $result = (bool)$updated;
-        return response()->json(['result' => $result]);
+        return $this->apiResponse(null, hasError: !$result);
     }
 
-    public function updateNationalCode(UserRequest $request, User $user)
+    public function updateNationalCode(UserRequest $request)
     {
+
         $nationalCode = $request->only('national_code');
-        if ($this->userService->notionalCodeExists($nationalCode)){
-            return response()->json([
-                'result' => false,
-                'error' => 'این کد ملی قبلا ثبت شده است'
+        if (!empty($nationalCode) && $this->userService->notionalCodeExists($nationalCode)) {
+            return $this->failedValidationResponse([
+                'national_code' => 'این کد ملی قبلا ثبت شده است'
             ]);
         }
 
-        $updated = $this->userService->updateProfile($nationalCode, $user->id);
+        $updated = $this->userService->updateProfile($nationalCode, $request->user()->id);
         $result = (bool)$updated;
-        return response()->json(['result' => $result]);
+        return $this->apiResponse(null, hasError: !$result);
     }
 
-    public function updateFullName(UserRequest $request, User $user)
+    public function updateFullName(UserRequest $request)
     {
-        $updated = $this->userService->updateProfile($request->only(['first_name', 'last_name']), $user->id);
+        $updated = $this->userService->updateProfile($request->only(['first_name', 'last_name']), $request->user()->id);
         $result = (bool)$updated;
-        return response()->json(['result' => $result]);
+        return $this->apiResponse(null, hasError: !$result);
     }
 
 
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Http\JsonResponse
     {
+        // admin permission
         $userDelete = $this->userService->deleteUser($user->id);
         $result = (bool)$userDelete;
-        return response()->json(['result' => $result]);
+        return $this->apiResponse(null, hasError: !$result);
     }
 
-
-    public function showUserPermissions(User $user)
+    public function showUserPermissions(User $user): \Illuminate\Http\JsonResponse
     {
-        $userPermissions = $this->userService->getUserPermissions($user);
-        return new PermissionCollection($userPermissions);
+        // admin permission
+        return $this->apiResponse(new PermissionCollection($this->userService->getUserPermissions($user)));
     }
 
-    public function showUserRoles(User $user){
-        return new RoleCollection($this->userService->getUserRoles($user));
+    public function showUserRoles(User $user): \Illuminate\Http\JsonResponse
+    {
+        // admin permission
+        return $this->apiResponse(new RoleCollection($this->userService->getUserRoles($user)));
     }
 
+    public function storeUserRoles(UserRequest $request, User $user){
+        $this->userService->addRoleToUser($request, $user);
+        return $this->apiResponse(null);
+    }
 
-//    public function index(User $user)
-//    {
-//        return $this->roleService->getRoles($user);
-//    }
-//
-//    public function store(Request $request)
-//    {
-//        //
-//    }
-//
-//    public function show(User $user, Role $role)
-//    {
-//        return $this->roleService->getRole($user, $role);
-//    }
-//
-//
-//    public function update(Request $request, Role $role)
-//    {
-//        //
-//    }
-//
-//    public function destroy(User $user, Role $role)
-//    {
-//        $userDelete = $this->roleService->deleteRole($user, $role->id);
-//        $result = $userDelete ? ['result' => true] : ['result' => false];
-//        return response()->json($result);
-//    }
-
+    public function storeUserPermissions(UserRequest $request, User $user){
+        $this->userService->addPermissionToUser($request, $user);
+        return $this->apiResponse(null);
+    }
 
 }
