@@ -2,12 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\ApiPaginationResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class PermissionCollection extends ResourceCollection
 {
-    public static $wrap = 'items';
+    use ApiPaginationResponse;
+    public static $wrap = 'result';
     /**
      * Transform the resource collection into an array.
      *
