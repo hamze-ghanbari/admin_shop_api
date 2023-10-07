@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Services;
 
 use App\Models\Role;
 use App\Repository\Contracts\RoleRepositoryInterface;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class RoleService
@@ -12,9 +13,10 @@ class RoleService
         public RoleRepositoryInterface $roleRepository
     ){}
 
-    public function getSearchRoles(Request $request)
+    public function getAllRoles()
     {
-        return $this->roleRepository->with('permissions')->search($request->query('search'))->paginate(15);
+        return $this->roleRepository->paginate();
+//        return $this->roleRepository->with('permissions')->search($request->query('search'))->paginate(15);
     }
 
     public function roleExists($name, $persianName){
@@ -50,6 +52,7 @@ class RoleService
     public function addPermissionToRole(Request $request, Role $role){
         $inputs = $request->all();
         $inputs['permissions'] ??= [];
+
         $role->permissions()->sync($inputs['permissions']);
     }
 
