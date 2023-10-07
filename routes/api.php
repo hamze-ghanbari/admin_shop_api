@@ -6,14 +6,7 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\PermissionController;
 use Illuminate\Support\Facades\Route;
 
-Route::fallback((function () {
-    return response()->json([
-        'status' => 404,
-        'message' => 'route not found',
-        'hasError' => true,
-        'result' => null
-    ]);
-}));
+
 
 Route::controller(OtpController::class)->group(function () {
     Route::post('login', 'otp');
@@ -40,10 +33,13 @@ Route::controller(UserController::class)->middleware('auth:api')->prefix('users'
 
 });
 
-//
-//Route::apiResource('roles', RoleController::class)->except('show');
-//Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus']);
-//
+Route::apiResource('roles', RoleController::class)->except('show')->middleware('auth:api');
+Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus'])->middleware('auth:api');
+Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions'])->middleware('auth:api');
+Route::post('roles/{role}/permissions', [RoleController::class, 'storeRolePermissions'])->middleware('auth:api');
+
+Route::get('permissions', PermissionController::class)->middleware('auth:api');
+
 //Route::get('users/{user}/permissions', [UserController::class, 'showUserPermissions']);
 //Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
 //Route::post('roles/{role}/permissions', [RoleController::class, 'addPermissionsToRole']);
@@ -51,3 +47,11 @@ Route::controller(UserController::class)->middleware('auth:api')->prefix('users'
 
 
 
+Route::fallback((function () {
+    return response()->json([
+        'status' => 404,
+        'message' => 'route not found',
+        'hasError' => true,
+        'result' => null
+    ]);
+}));
