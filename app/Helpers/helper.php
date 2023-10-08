@@ -131,4 +131,19 @@ function validateNationalCode($nationalCode): bool
         }
 
     }
+
+//    function pdoErrorMessage(int $code): string{
+//        $codeMessages = [
+//            1146 => 'Table x does not exist',
+//            1040 => 'Too many connections',
+//            1045 => 'Access denied',
+//            1064 => 'Syntax error',
+//            1114 => 'Table is full',
+//            2006 => 'MySQL server connection closed',
+//            2008 => 'Client ran out of memory',
+//            2013 => 'Lost connection during query',
+//
+//        ];
+//        return $codeMessages[$code];
+//    }
 }

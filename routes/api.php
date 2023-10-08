@@ -12,12 +12,12 @@ Route::controller(OtpController::class)->group(function () {
     Route::post('login', 'otp');
     Route::post('confirm', 'confirm');
     Route::get('resend/{token}', 'resendOtpCode');
-    Route::get('logout', 'logout')->middleware('auth:api');
+    Route::get('logout', 'logout');
 });
 
 
-Route::middleware('auth:api')->apiResource('users', UserController::class)->except(['update', 'store', 'create', 'edit']);
-Route::controller(UserController::class)->middleware('auth:api')->prefix('users')->group(function () {
+Route::apiResource('users', UserController::class)->except(['update', 'store', 'create', 'edit']);
+Route::controller(UserController::class)->prefix('users')->group(function () {
 
     Route::put('edit/birthDate', 'updateBirthDate');
     Route::put('edit/nationalCode', 'updateNationalCode');
@@ -33,12 +33,12 @@ Route::controller(UserController::class)->middleware('auth:api')->prefix('users'
 
 });
 
-Route::apiResource('roles', RoleController::class)->except('show')->middleware('auth:api');
-Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus'])->middleware('auth:api');
-Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions'])->middleware('auth:api');
-Route::post('roles/{role}/permissions', [RoleController::class, 'storeRolePermissions'])->middleware('auth:api');
+Route::apiResource('roles', RoleController::class)->except('show');
+Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus']);
+Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
+Route::post('roles/{role}/permissions', [RoleController::class, 'storeRolePermissions']);
 
-Route::get('permissions', PermissionController::class)->middleware('auth:api');
+Route::get('permissions', PermissionController::class);
 
 //Route::get('users/{user}/permissions', [UserController::class, 'showUserPermissions']);
 //Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
