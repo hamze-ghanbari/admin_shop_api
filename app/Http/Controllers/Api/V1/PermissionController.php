@@ -12,7 +12,9 @@ class PermissionController extends Controller
 {
     public function __construct(
         public PermissionService $permissionService
-    ){}
+    ){
+        $this->middleware('auth:api');
+    }
 
     public function __invoke(){
         return new PermissionCollection($this->permissionService->getAllPermissions());
