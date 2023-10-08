@@ -24,6 +24,7 @@ class RoleController extends Controller
         public RoleService $roleService
     )
     {
+        $this->middleware('auth:api');
     }
 
     public function index()
@@ -87,8 +88,8 @@ class RoleController extends Controller
             $this->roleService->addPermissionToRole($request, $role);
             return $this->apiResponse(null);
         } catch (QueryException $e) {
-//            if ($e->errorInfo[1] == 1452)
-            return $this->apiResponse(null, hasError: true);
+            if ($e->errorInfo[1] == 1452)
+            return $this->apiResponse(null, 500, 'سطح دسترسی تعریف شده وجود ندارد', true);
         }
     }
 
