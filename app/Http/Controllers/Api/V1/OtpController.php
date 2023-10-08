@@ -19,6 +19,7 @@ class OtpController extends Controller
 
     public function __construct(public OtpService $otpService)
     {
+        $this->middleware('auth:api')->only('logout');
     }
 
     public function otp(OtpRequest $request)
