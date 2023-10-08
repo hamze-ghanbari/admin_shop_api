@@ -12,6 +12,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use App\Traits\ValidationResponse;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -21,16 +22,22 @@ class UserController extends Controller
         public UserService $userService,
     )
     {
+        $this->middleware('auth:api');
     }
 
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return $this->apiResponse(null, 403, 'forbidden', true);
+        }
         return new UserCollection($this->userService->allUsers());
     }
 
     public function show(User $user)
     {
-        // admin permission
+        if (Gate::denies('admin')) {
+            return $this->apiResponse(null, 403, 'forbidden', true);
+        }
         return $this->apiResponse(new UserResource($user));
     }
 
@@ -74,7 +81,9 @@ class UserController extends Controller
 
     public function destroy(User $user): \Illuminate\Http\JsonResponse
     {
-        // admin permission
+        if (Gate::denies('admin')) {
+            return $this->apiResponse(null, 403, 'forbidden', true);
+        }
         $userDelete = $this->userService->deleteUser($user->id);
         $result = (bool)$userDelete;
         return $this->apiResponse(null, hasError: !$result);
@@ -82,22 +91,28 @@ class UserController extends Controller
 
     public function showUserPermissions(User $user): \Illuminate\Http\JsonResponse
     {
-        // admin permission
+        if (Gate::denies('admin')) {
+            return $this->apiResponse(null, 403, 'forbidden', true);
+        }
         return $this->apiResponse(new PermissionCollection($this->userService->getUserPermissions($user)));
     }
 
     public function showUserRoles(User $user): \Illuminate\Http\JsonResponse
     {
-        // admin permission
+        if (Gate::denies('admin')) {
+            return $this->apiResponse(null, 403, 'forbidden', true);
+        }
         return $this->apiResponse(new RoleCollection($this->userService->getUserRoles($user)));
     }
 
-    public function storeUserRoles(UserRequest $request, User $user){
+    public function storeUserRoles(UserRequest $request, User $user)
+    {
         $this->userService->addRoleToUser($request, $user);
         return $this->apiResponse(null);
     }
 
-    public function storeUserPermissions(UserRequest $request, User $user){
+    public function storeUserPermissions(UserRequest $request, User $user)
+    {
         $this->userService->addPermissionToUser($request, $user);
         return $this->apiResponse(null);
     }
