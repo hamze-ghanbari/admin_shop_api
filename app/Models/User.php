@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\PersianDateCast;
+use App\Traits\HasPermission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasPermission;
 
     /**
      * The attributes that are mass assignable.
