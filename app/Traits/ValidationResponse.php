@@ -15,13 +15,12 @@ trait ValidationResponse
 
     public function failedValidationResponse(array | string $messages, $status = 400): \Illuminate\Http\JsonResponse
     {
-        $response = [];
-        $response['status'] = $status;
-        $response['hasError'] = true;
-        $response['messages'] = $messages;
-        $response['result'] = null;
-
-        return response()->json($response);
+        return response()->json([
+            'status' => $status,
+            'hasError' => true,
+            'message' => $messages,
+            'result' => null
+        ]);
     }
 
 }
