@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +19,13 @@ class PermissionServiceProvider extends ServiceProvider
                return $user->hasPermissionTo($permission);
             });
             });
+
+            Role::get()->map(function ($role) {
+                Gate::define($role->name, function (User $user) use($role){
+                    return $user->hasRole($role);
+                });
+            });
+
         } catch (\Exception $e) {
             report($e);
             return false;
