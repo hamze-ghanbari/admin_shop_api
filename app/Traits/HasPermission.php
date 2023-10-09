@@ -15,13 +15,14 @@ trait HasPermission
         return $this->hasPermission($permission) || $this->hasPermissionThroghRole($permission);
     }
 
-    public function hasRole(...$roles)
+    public function hasRole($role): bool
     {
-        foreach ($roles as $role) {
-            if ($this->roles->contains('name', $role))
-                return true;
-        }
-        return false;
+        return (bool)$this->roles->where('name', $role->name)->count();
+//        foreach ($roles as $role) {
+//            if ($this->roles->contains('name', $role))
+//                return true;
+//        }
+//        return false;
     }
 
     public function hasPermissionThroghRole($permission)
