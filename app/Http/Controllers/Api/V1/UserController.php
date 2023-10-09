@@ -9,17 +9,17 @@ use App\Http\Resources\PermissionCollection;
 use App\Http\Resources\RoleCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Http\Services\PolicyService\PolicyService;
 use App\Models\User;
 use App\Traits\ApiResponse;
-use App\Traits\ValidationResponse;
-use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-    use ApiResponse, ValidationResponse;
+    use ApiResponse;
 
     public function __construct(
-        public UserService $userService,
+        public UserService   $userService,
+        public PolicyService $policyService
     )
     {
         $this->middleware('auth:api');
@@ -27,24 +27,24 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         return new UserCollection($this->userService->allUsers());
     }
 
     public function show(User $user)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         return $this->apiResponse(new UserResource($user));
     }
 
     public function profile(User $user)
     {
-        if ($user->id !== auth()->user()->id) {
-            return $this->failedValidationResponse('forbidden', 403);
+        if ($this->sameUser($user->id)) {
+            return $this->forbiddenResponse();
         }
         return $this->apiResponse(auth()->user());
     }
@@ -62,7 +62,8 @@ class UserController extends Controller
         $nationalCode = $request->only('national_code');
         if (!empty($nationalCode) && $this->userService->notionalCodeExists($nationalCode)) {
             return $this->failedValidationResponse([
-                'national_code' => 'این کد ملی قبلا ثبت شده است'
+                'national_code' =>
+                    ['این کد ملی قبلا ثبت شده است']
             ]);
         }
 
@@ -81,9 +82,9 @@ class UserController extends Controller
 
     public function destroy(User $user): \Illuminate\Http\JsonResponse
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         $userDelete = $this->userService->deleteUser($user->id);
         $result = (bool)$userDelete;
         return $this->apiResponse(null, hasError: !$result);
@@ -91,17 +92,17 @@ class UserController extends Controller
 
     public function showUserPermissions(User $user): \Illuminate\Http\JsonResponse
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         return $this->apiResponse(new PermissionCollection($this->userService->getUserPermissions($user)));
     }
 
     public function showUserRoles(User $user): \Illuminate\Http\JsonResponse
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         return $this->apiResponse(new RoleCollection($this->userService->getUserRoles($user)));
     }
 

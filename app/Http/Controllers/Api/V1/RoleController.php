@@ -8,6 +8,7 @@ use App\Http\Requests\RoleRequest;
 use App\Http\Resources\PermissionCollection;
 use App\Http\Resources\RoleCollection;
 use App\Http\Resources\RoleResource;
+use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\ApiResponse;
@@ -22,7 +23,8 @@ class RoleController extends Controller
     use ValidationResponse, ApiResponse;
 
     public function __construct(
-        public RoleService $roleService
+        public RoleService $roleService,
+        public PolicyService $policyService
     )
     {
         $this->middleware('auth:api');
@@ -30,17 +32,17 @@ class RoleController extends Controller
 
     public function index()
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         return new RoleCollection($this->roleService->getAllRoles());
     }
 
     public function store(RoleRequest $request)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         if ($this->roleService->roleExists($request->input('name'), $request->input('persian_name'))) {
             return $this->failedValidationResponse('این نقش قبلا ثبت شده است');
         }
@@ -57,9 +59,9 @@ class RoleController extends Controller
 //                'error' => 'این نقش قبلا ثبت شده است'
 //            ]);
 //        }
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         $role = $this->roleService->updateRole($request, $role);
         if ($role) {
             return $this->apiResponse(null);
@@ -70,9 +72,9 @@ class RoleController extends Controller
 
     public function changeStatus(Role $role, $status)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         $updated = $this->roleService->updateRoleStatus($role, $status);
         if ($updated) {
             return $this->apiResponse(null);
@@ -83,9 +85,9 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         $roleDelete = $this->roleService->deleteRole($role->id);
         $result = (bool)$roleDelete;
         return $this->apiResponse(null, hasError: !$result);
@@ -93,24 +95,27 @@ class RoleController extends Controller
 
     public function showRolePermissions(Role $role)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         $rolePermissions = $this->roleService->getRolePermissions($role);
         return new PermissionCollection($rolePermissions);
     }
 
     public function storeRolePermissions(Request $request, Role $role)
     {
-        if (Gate::denies('admin')) {
-            return $this->apiResponse(null, 403, 'forbidden', true);
-        }
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
         try {
             $this->roleService->addPermissionToRole($request, $role);
             return $this->apiResponse(null);
         } catch (QueryException $e) {
-            if ($e->errorInfo[1] == 1452)
-            return $this->apiResponse(null, 500, 'سطح دسترسی تعریف شده وجود ندارد', true);
+            if ($e->errorInfo[1] == 1452){
+            return $this->serverError('سطح دسترسی تعریف شده وجود ندارد');
+            }else{
+                return $this->serverError();
+            }
         }
     }
 
