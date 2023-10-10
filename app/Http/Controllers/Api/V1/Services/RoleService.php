@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers\Api\V1\Services;
 
+use App\Http\Services\CacheApiService\CacheApiService;
 use App\Models\Role;
 use App\Repository\Contracts\RoleRepositoryInterface;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class RoleService
 {
     public function __construct(
-        public RoleRepositoryInterface $roleRepository
+        public RoleRepositoryInterface $roleRepository,
+        public CacheApiService $cacheApiService
     ){}
 
     public function getAllRoles()
     {
+        if($this->cacheApiService->useCache('roles')){
+            return $this->cacheApiService->cacheApi('roles', $this->roleRepository->paginate());
+        }
         return $this->roleRepository->paginate();
 //        return $this->roleRepository->with('permissions')->search($request->query('search'))->paginate(15);
     }
