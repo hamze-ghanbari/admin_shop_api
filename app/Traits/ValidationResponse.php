@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
 
 trait ValidationResponse
 {
