@@ -12,10 +12,12 @@ use App\Http\Resources\UserResource;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\User;
 use App\Traits\ApiResponse;
+use App\Traits\ValidationResponse;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-    use ApiResponse;
+    use ApiResponse, ValidationResponse;
 
     public function __construct(
         public UserService   $userService,
@@ -33,7 +35,7 @@ class UserController extends Controller
         return new UserCollection($this->userService->allUsers());
     }
 
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
@@ -41,7 +43,7 @@ class UserController extends Controller
         return $this->apiResponse(new UserResource($user));
     }
 
-    public function profile(User $user)
+    public function profile(User $user): JsonResponse
     {
         if ($this->sameUser($user->id)) {
             return $this->forbiddenResponse();
@@ -49,14 +51,14 @@ class UserController extends Controller
         return $this->apiResponse(auth()->user());
     }
 
-    public function updateBirthDate(UserRequest $request)
+    public function updateBirthDate(UserRequest $request): JsonResponse
     {
         $updated = $this->userService->updateProfile($request->only('birth_date'), $request->user()->id);
         $result = (bool)$updated;
         return $this->apiResponse(null, hasError: !$result);
     }
 
-    public function updateNationalCode(UserRequest $request)
+    public function updateNationalCode(UserRequest $request): JsonResponse
     {
 
         $nationalCode = $request->only('national_code');
@@ -72,7 +74,7 @@ class UserController extends Controller
         return $this->apiResponse(null, hasError: !$result);
     }
 
-    public function updateFullName(UserRequest $request)
+    public function updateFullName(UserRequest $request): JsonResponse
     {
         $updated = $this->userService->updateProfile($request->only(['first_name', 'last_name']), $request->user()->id);
         $result = (bool)$updated;
@@ -80,7 +82,7 @@ class UserController extends Controller
     }
 
 
-    public function destroy(User $user): \Illuminate\Http\JsonResponse
+    public function destroy(User $user): JsonResponse
     {
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
@@ -90,7 +92,7 @@ class UserController extends Controller
         return $this->apiResponse(null, hasError: !$result);
     }
 
-    public function showUserPermissions(User $user): \Illuminate\Http\JsonResponse
+    public function showUserPermissions(User $user): JsonResponse
     {
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
@@ -98,7 +100,7 @@ class UserController extends Controller
         return $this->apiResponse(new PermissionCollection($this->userService->getUserPermissions($user)));
     }
 
-    public function showUserRoles(User $user): \Illuminate\Http\JsonResponse
+    public function showUserRoles(User $user): JsonResponse
     {
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
@@ -106,13 +108,13 @@ class UserController extends Controller
         return $this->apiResponse(new RoleCollection($this->userService->getUserRoles($user)));
     }
 
-    public function storeUserRoles(UserRequest $request, User $user)
+    public function storeUserRoles(UserRequest $request, User $user): JsonResponse
     {
         $this->userService->addRoleToUser($request, $user);
         return $this->apiResponse(null);
     }
 
-    public function storeUserPermissions(UserRequest $request, User $user)
+    public function storeUserPermissions(UserRequest $request, User $user): JsonResponse
     {
         $this->userService->addPermissionToUser($request, $user);
         return $this->apiResponse(null);

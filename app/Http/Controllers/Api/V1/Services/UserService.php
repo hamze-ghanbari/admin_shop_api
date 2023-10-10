@@ -3,27 +3,32 @@
 namespace App\Http\Controllers\Api\V1\Services;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Services\CacheApiService\CacheApiService;
 use App\Models\User;
 use App\Repository\Eloquent\UserRepository;
 
 class UserService
 {
-
-    public function __construct(public UserRepository $userRepository){}
+    public function __construct(
+        public UserRepository  $userRepository,
+        public CacheApiService $cacheApiService
+    )
+    {
+    }
 
     public function allUsers()
     {
-//        return Cache::remember('users', 600, function () use($request) {
-//        return $this->userRepository->paginate(15);
+        if ($this->cacheApiService->useCache('users')) {
+            return $this->cacheApiService->cacheApi('users', $this->userRepository->paginate());
+        }
         return $this->userRepository->paginate();
-//        });
     }
 
     public function addRoleToUser(UserRequest $request, User $user)
     {
         $inputs = $request->all();
         $inputs['roles'] ??= [];
-      return $user->roles()->sync($inputs['roles']);
+        $user->roles()->sync($inputs['roles']);
     }
 
     public function addPermissionToUser(UserRequest $request, User $user)
@@ -48,7 +53,8 @@ class UserService
         return $this->userRepository->notionalCodeExists($nationalCode);
     }
 
-    public function getUserPermissions(User $user){
+    public function getUserPermissions(User $user)
+    {
         return $user->permissions;
     }
 
