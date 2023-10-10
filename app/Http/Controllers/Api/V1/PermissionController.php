@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionCollection;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Traits\ApiResponse;
-use Illuminate\Support\Facades\Gate;
 
 
 class PermissionController extends Controller
