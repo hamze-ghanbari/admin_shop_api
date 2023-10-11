@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Permission;
+use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
@@ -50,6 +52,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        User::factory(10)->create();
         // $this->call("OthersTableSeeder");
     }
 
