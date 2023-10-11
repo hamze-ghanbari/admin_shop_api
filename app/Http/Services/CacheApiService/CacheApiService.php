@@ -8,11 +8,16 @@ class CacheApiService
 {
     use CacheApi;
 
-    public function cacheApi($key, $data)
+    public function cacheApi($key, $data, $time = 600)
     {
-        return Cache::remember($key, 600, function () use ($data) {
+        return Cache::remember($key, $time, function () use ($data) {
             return $data;
         });
+    }
+
+    public function hasCache($key): bool
+    {
+        return Cache::has($key);
     }
 
     public function forgetCacheApi($key)
