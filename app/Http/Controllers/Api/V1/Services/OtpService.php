@@ -12,6 +12,7 @@ use App\Mail\OtpMail;
 use App\Models\Otp;
 use App\Models\User;
 use App\Repository\Contracts\OtpRepositoryInterface;
+use App\Repository\Contracts\RoleRepositoryInterface;
 use App\Repository\Contracts\UserRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class OtpService
 
     public function __construct(
         public OtpRepositoryInterface  $otpRepository,
-        public UserRepositoryInterface $userRepository
+        public UserRepositoryInterface $userRepository,
+        public RoleRepositoryInterface $roleRepository
     )
     {
     }
@@ -55,11 +57,11 @@ class OtpService
         $newUser = null;
         if (preg_match('/^' . config('constants.email_regex') . '$/', $userName)) {
 
-           $newUser['email'] = $this->getUserByEmail($userName);
+            $newUser['email'] = $this->getUserByEmail($userName);
 
         } elseif (preg_match('/^' . config('constants.mobile_regex') . '$/', $userName)) {
 
-           $newUser['mobile'] = $this->getUserByMobile($userName);
+            $newUser['mobile'] = $this->getUserByMobile($userName);
 
         }
 
@@ -88,6 +90,17 @@ class OtpService
             'login_id' => $userName,
             'type' => $type
         ]);
+    }
+
+    public function addRoleToUser()
+    {
+        if ($this->roleRepository->checkRole('user', 'کاربر عادی')) {
+            $roleId = $this->roleRepository->findWhere(['name' => 'user'])->get(['id'])[0]['id'];
+
+            if (auth()->user()->roles()->find($roleId) === null) {
+                auth()->user()->roles()->attach([$roleId]);
+            }
+        }
     }
 
     public function getOtp($token): mixed

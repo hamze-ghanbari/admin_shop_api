@@ -20,6 +20,7 @@ class OtpController extends Controller
     public function __construct(public OtpService $otpService)
     {
         $this->middleware('auth:api')->only('logout');
+        $this->middleware('authenticated')->except('logout');
     }
 
     public function otp(OtpRequest $request)
@@ -105,6 +106,9 @@ class OtpController extends Controller
             $this->otpService->updateOtpCode($otp);
 
             $this->otpService->userLogin($user);
+
+            $this->otpService->addRoleToUser();
+
             $accessToken = $request->user()->createToken('AccessToken')->accessToken;
 //            $expireAt = $accessToken->expires_at;
             DB::commit();
@@ -114,7 +118,6 @@ class OtpController extends Controller
 //                    'expireAt' => '$expireAt'
 //                    'expireAt' => Carbon::parse('$expireAt')->toDateTimeString()
             ]);
-
         } catch (\Exception) {
             DB::rollBack();
             return $this->failedValidationResponse('خطا در برقراری ارتباط', 500);
