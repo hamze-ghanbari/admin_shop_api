@@ -19,7 +19,7 @@ trait ValidationResponse
             'hasError' => true,
             'message' => $messages,
             'result' => null
-        ]);
+        ], $status);
     }
 
 }

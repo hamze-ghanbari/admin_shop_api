@@ -109,7 +109,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->with($relations);
     }
 
-    public function has(string $relation): bool
+    public function has(string $relation)
     {
         return $this->model->has($relation);
     }
