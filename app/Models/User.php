@@ -71,6 +71,7 @@ class User extends Authenticatable
                 $query->where('first_name', 'like', "%{$term}%")
                     ->orWhere('last_name', 'like', "%{$term}%")
                     ->orWhere('mobile', 'like', "%{$term}%")
+                    ->orWhere('national_code', 'like', "%{$term}%")
                     ->orWhere('email', 'like', "%{$term}%");
             });
         })->when($time, function (Builder $query, $time) {
