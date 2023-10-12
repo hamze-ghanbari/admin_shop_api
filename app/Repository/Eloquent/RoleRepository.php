@@ -16,8 +16,12 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
         return $this->getModel()->where(['name' => $name])->orWhere(['persian_name' => $persianName])->exists();
     }
 
+    public function getRoleSearch($value){
+        return $this->getModel()->search($value)->paginate();
+    }
+
     public function getRoles()
     {
-        return $this->has('permissions')->get();
+        return $this->getModel()->has('permissions')->pluck('id')->toArray();
     }
 }
