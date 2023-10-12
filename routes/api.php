@@ -19,6 +19,7 @@ Route::controller(OtpController::class)->group(function () {
 Route::apiResource('users', UserController::class)->except(['update', 'store', 'create', 'edit']);
 Route::controller(UserController::class)->prefix('users')->group(function () {
 
+
     Route::put('edit/birthDate', 'updateBirthDate');
     Route::put('edit/nationalCode', 'updateNationalCode');
     Route::put('edit/fullName', 'updateFullName');
@@ -31,12 +32,16 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
     Route::get('{user}/permissions', 'showUserPermissions');
     Route::post('{user}/permissions', 'storeUserPermissions');
 
+    Route::post('search', 'searchUser');
 });
 
 Route::apiResource('roles', RoleController::class)->except('show');
-Route::get('roles/{role}/status/{status}', [RoleController::class, 'changeStatus']);
-Route::get('roles/{role}/permissions', [RoleController::class, 'showRolePermissions']);
-Route::post('roles/{role}/permissions', [RoleController::class, 'storeRolePermissions']);
+Route::controller(RoleController::class)->prefix('roles')->group(function () {
+Route::post('search', 'searchRole');
+Route::get('{role}/status/{status}', [RoleController::class, 'changeStatus']);
+Route::get('{role}/permissions', [RoleController::class, 'showRolePermissions']);
+Route::post('{role}/permissions', [RoleController::class, 'storeRolePermissions']);
+});
 
 Route::get('permissions', PermissionController::class);
 
