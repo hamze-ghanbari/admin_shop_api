@@ -24,5 +24,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Request $request): void
     {
         JsonResource::withoutWrapping();
+
+        Request::macro('fields', function ($guarded = ['id'], $attributes = []) use ($request) {
+            $except = ['_token', '_method'];
+            array_push($except, ...$guarded);
+            $result = $request->except($except);
+            if(!empty($attributes)){
+                $result =  array_merge($request->except($except), $attributes);
+            }
+            return $result;
+        });
     }
 }
