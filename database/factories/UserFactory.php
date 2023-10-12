@@ -18,7 +18,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'national_code' => '9'.fake()->randomNumber(9),
             'mobile' => '0910456'. fake()->randomNumber(4),
+            'email' => fake()->email(),
         ];
     }
 
@@ -27,8 +31,9 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-//        return $this->state(fn (array $attributes) => [
-//            'email_verified_at' => null,
-//        ]);
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+            'mobile_verified_at' => null,
+        ]);
     }
 }
