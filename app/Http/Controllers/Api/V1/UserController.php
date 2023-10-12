@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Traits\ApiResponse;
 use App\Traits\ValidationResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -33,6 +34,13 @@ class UserController extends Controller
             return $this->forbiddenResponse();
 
         return new UserCollection($this->userService->allUsers());
+    }
+
+    public function searchUser(Request $request){
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
+        return new UserCollection($this->userService->searchUser($request->input('search')));
     }
 
     public function show(User $user): JsonResponse
