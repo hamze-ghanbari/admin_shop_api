@@ -41,7 +41,7 @@ class Role extends Model
     {
         return $query->when($term, function(Builder $query) use ($term){
             $query->where('name', 'like', "%{$term}%")
-                ->orWhere('description', 'like', "%{$term}%");
+                ->orWhere('persian_name', 'like', "%{$term}%");
         });
     }
 
