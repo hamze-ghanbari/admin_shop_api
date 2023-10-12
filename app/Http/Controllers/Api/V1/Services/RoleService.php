@@ -27,6 +27,10 @@ class RoleService
         return $this->roleRepository->checkRole($name, $persianName);
     }
 
+    public function searchRole($value){
+        return $this->roleRepository->getRoleSearch($value);
+    }
+
     public function createRole(Request $request)
     {
         $status = $request->has('status') ? $request->input('status') : 0;
