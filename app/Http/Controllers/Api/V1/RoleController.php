@@ -8,6 +8,7 @@ use App\Http\Requests\RoleRequest;
 use App\Http\Resources\PermissionCollection;
 use App\Http\Resources\RoleCollection;
 use App\Http\Resources\RoleResource;
+use App\Http\Resources\UserCollection;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Role;
 use App\Models\User;
@@ -23,7 +24,7 @@ class RoleController extends Controller
     use ValidationResponse, ApiResponse;
 
     public function __construct(
-        public RoleService $roleService,
+        public RoleService   $roleService,
         public PolicyService $policyService
     )
     {
@@ -38,13 +39,20 @@ class RoleController extends Controller
         return new RoleCollection($this->roleService->getAllRoles());
     }
 
+    public function searchRole(Request $request){
+        if ($this->policyService->authorize(['admin']))
+            return $this->forbiddenResponse();
+
+        return new UserCollection($this->roleService->searchRole($request->input('search')));
+    }
+
     public function store(RoleRequest $request)
     {
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
 
         if ($this->roleService->roleExists($request->input('name'), $request->input('persian_name'))) {
-            return $this->failedValidationResponse('این نقش قبلا ثبت شده است');
+            return $this->failedValidationResponse('این نقش قبلا ثبت شده است', 409);
         }
 
         $this->roleService->createRole($request);
@@ -53,20 +61,18 @@ class RoleController extends Controller
 
     public function update(RoleRequest $request, Role $role)
     {
-//        if ($this->roleService->roleExists($request->input('name'), $request->input('persian_name')) && $role->name == $request->input('name')) {
-//            return response()->json([
-//                'result' => false,
-//                'error' => 'این نقش قبلا ثبت شده است'
-//            ]);
-//        }
         if ($this->policyService->authorize(['admin']))
             return $this->forbiddenResponse();
 
-        $role = $this->roleService->updateRole($request, $role);
-        if ($role) {
+        try {
+            $this->roleService->updateRole($request, $role);
             return $this->apiResponse(null);
-        } else {
-            return $this->apiResponse(null, 500, 'خطا در ویرایش نقش', true);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return $this->serverError('این نقش قبلا ثبت شده است');
+            } else {
+                return $this->serverError('خطا در ویرایش نقش');
+            }
         }
     }
 
@@ -79,7 +85,7 @@ class RoleController extends Controller
         if ($updated) {
             return $this->apiResponse(null);
         } else {
-            return $this->apiResponse(null, 500, 'خطا در ویرایش وضعیت نقش', true);
+            return $this->serverError('خطا در ویرایش وضعیت نقش');
         }
     }
 
@@ -111,9 +117,9 @@ class RoleController extends Controller
             $this->roleService->addPermissionToRole($request, $role);
             return $this->apiResponse(null);
         } catch (QueryException $e) {
-            if ($e->errorInfo[1] == 1452){
-            return $this->serverError('سطح دسترسی تعریف شده وجود ندارد');
-            }else{
+            if ($e->errorInfo[1] == 1452) {
+                return $this->serverError('سطح دسترسی تعریف شده وجود ندارد');
+            } else {
                 return $this->serverError();
             }
         }
