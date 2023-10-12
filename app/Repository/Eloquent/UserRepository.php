@@ -15,6 +15,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->findWhere([$field => $value])->withTrashed()->first();
     }
 
+    public function getUserSearch($value){
+        return $this->getModel()->search($value)->paginate();
+    }
+
     public function notionalCodeExists($nationalCode)
     {
         return $this->getModel()->withTrashed()->where($nationalCode)->exists();
