@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\TypeEnum;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Api\V1\Services\OtpService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConfirmOtpRequest;
@@ -21,6 +22,7 @@ class OtpController extends Controller
     {
         $this->middleware('auth:api')->only('logout');
         $this->middleware('authenticated')->except('logout');
+        $this->middleware('limiter:5')->except('logout');
     }
 
     public function otp(OtpRequest $request)
@@ -64,7 +66,7 @@ class OtpController extends Controller
         }
 
         if ($data['type'] === TypeEnum::Email) {
-            $this->otpService->sendEmail($otp->otp_code, $userName);
+            $this->otpService->emailRegisteredEvent($otp->otp_code, $userName);
         } elseif ($data['type'] === TypeEnum::Mobile) {
             // send sms
         }
