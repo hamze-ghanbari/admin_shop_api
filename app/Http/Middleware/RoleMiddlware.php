@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Services\PolicyService\PolicyService;
 use App\Traits\ApiResponse;
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -11,15 +13,20 @@ class RoleMiddlware
 {
     use ApiResponse;
 
-    public function handle(Request $request, Closure $next, $role, $permission = null): Response
+    public function __construct(
+        public PolicyService $policyService
+    )
     {
-        if (!$request->user()->hasRole($role) && $permission == null) {
-            $this->apiResponse(null, Response::HTTP_FORBIDDEN, 'forbidden', true);
-        }
+    }
 
-        if ($permission !== null && !$request->user()->can($permission)) {
-            $this->apiResponse(null, Response::HTTP_FORBIDDEN, 'forbidden', true);
-        }
+    public function handle(Request $request, Closure $next, $roles = null, $permissions = null): Response|JsonResponse
+    {
+        $roles = explode("|", $roles);
+        $permissions = explode("|", $permissions);
+
+        if ($this->policyService->authorize($roles, $permissions))
+            return $this->forbiddenResponse();
+
         return $next($request);
     }
 }
