@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\UserRegistered;
+use App\Listeners\SendEmailRegistered;
 use App\Models\Role;
 use App\Models\User;
 use App\Observers\RoleObserver;
@@ -22,8 +24,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        UserRegistered::class => [
+            SendEmailRegistered::class,
         ],
     ];
 
