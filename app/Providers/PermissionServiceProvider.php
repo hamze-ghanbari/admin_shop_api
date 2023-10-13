@@ -5,10 +5,11 @@ namespace App\Providers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
-class PermissionServiceProvider extends ServiceProvider
+class PermissionServiceProvider extends ServiceProvider implements DeferrableProvider
 {
 
     public function boot()

@@ -31,4 +31,9 @@ class PolicyService
             return true;
         }
     }
+
+    public function sameUser($userId): bool
+    {
+        return auth()->user() === $userId;
+    }
 }
