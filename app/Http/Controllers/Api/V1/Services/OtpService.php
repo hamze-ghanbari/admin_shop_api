@@ -6,6 +6,7 @@ use App\Enums\ActivationEnum;
 use App\Enums\StatusEnum;
 use App\Enums\TypeEnum;
 use App\Enums\UsedEnum;
+use App\Events\UserRegistered;
 use App\Http\Services\MessageService\Algoritms\Email\EmailService;
 use App\Http\Services\MessageService\MessageService;
 use App\Mail\OtpMail;
@@ -142,7 +143,7 @@ class OtpService
 
     public function getUserById($userId)
     {
-        return $this->userRepository->find($userId);
+        return $this->userRepository->with(['roles', 'permissions'])->find($userId);
     }
 
     public function userLogin($user)
@@ -153,6 +154,10 @@ class OtpService
     public function logout($request)
     {
         $request->user()->token()->revoke();
+    }
+
+    public function emailRegisteredEvent($code, $userName){
+        UserRegistered::dispatch($code, $userName);
     }
 
     public function sendEmail($otpCode, $userName)
