@@ -51,7 +51,7 @@ Route::get('permissions', PermissionController::class);
 Route::apiResource('categories', CategoryController::class)->except('show');
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::post('search', 'searchCategory');
-    Route::get('{category}/status/{status}', [RoleController::class, 'changeStatus']);
+    Route::get('{category}/status/{status}','changeStatus');
 });
 
 
