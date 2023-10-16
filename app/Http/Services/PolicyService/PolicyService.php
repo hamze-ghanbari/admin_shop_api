@@ -10,26 +10,17 @@ class PolicyService
     public function authorize($roles = [], $permissions = []): bool
     {
         $result = [];
-        foreach ($roles as $role) {
-            if (Gate::denies($role))
-                array_push($result, false);
-            else
-                array_push($result, true);
+        if (!empty($roles)) {
+            foreach ($roles as $role) {
+                array_push($result, Gate::denies('R'.$role, auth()->user()));
+            }
         }
-
-        foreach ($permissions as $permission) {
-            if (Gate::denies($permission))
-                array_push($result, false);
-            else
-                array_push($result, true);
+        if (!empty($permissions)) {
+            foreach ($permissions as $permission) {
+                array_push($result, Gate::denies('P'.$permission, auth()->user()));
+            }
         }
-
-        if (in_array(true, $result)){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return in_array(false, $result);
     }
 
     public function sameUser($userId): bool
