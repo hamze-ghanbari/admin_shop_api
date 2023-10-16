@@ -115,7 +115,7 @@ class OtpController extends Controller
 //            $expireAt = $accessToken->expires_at;
             DB::commit();
             return $this->apiResponse([
-                'user' => $user,
+                'user' => auth()->user(),
                 'accessToken' => $accessToken,
 //                    'expireAt' => '$expireAt'
 //                    'expireAt' => Carbon::parse('$expireAt')->toDateTimeString()
