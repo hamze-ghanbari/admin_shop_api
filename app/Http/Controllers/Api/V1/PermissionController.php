@@ -20,7 +20,7 @@ class PermissionController extends Controller
     }
 
     public function __invoke(){
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['read-permission']))
             return $this->forbiddenResponse();
 
         return new PermissionCollection($this->permissionService->getAllPermissions());
