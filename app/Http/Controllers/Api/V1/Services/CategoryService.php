@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Services;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\UploadService\Algoritms\Base64FIle;
 use App\Http\Services\UploadService\UploadService;
@@ -15,12 +16,16 @@ class CategoryService
     public function __construct(
         public ImageService                $imageService,
         public CategoryRepositoryInterface $categoryRepository,
+        public CacheApiService $cacheApiService
     )
     {
     }
 
     public function getAllCategories()
     {
+        if($this->cacheApiService->useCache('categories')){
+            return $this->cacheApiService->cacheApi('categories', $this->categoryRepository->with('parent')->paginate());
+        }
         return $this->categoryRepository->with('parent')->paginate();
     }
 
