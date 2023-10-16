@@ -34,14 +34,14 @@ class RoleController extends Controller
 
     public function index()
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['read-role']))
             return $this->forbiddenResponse();
 
         return new RoleCollection($this->roleService->getAllRoles());
     }
 
     public function searchRole(Request $request){
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['read-role']))
             return $this->forbiddenResponse();
 
         return new UserCollection($this->roleService->searchRole($request->input('search')));
@@ -49,7 +49,7 @@ class RoleController extends Controller
 
     public function store(RoleRequest $request)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['create-role']))
             return $this->forbiddenResponse();
 
         if ($this->roleService->roleExists($request->input('name'), $request->input('persian_name'))) {
@@ -62,7 +62,7 @@ class RoleController extends Controller
 
     public function update(RoleRequest $request, Role $role)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['update-role']))
             return $this->forbiddenResponse();
 
         try {
@@ -79,7 +79,7 @@ class RoleController extends Controller
 
     public function changeStatus(Role $role, $status)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['update-role']))
             return $this->forbiddenResponse();
 
         $updated = $this->roleService->updateRoleStatus($role, $status);
@@ -92,7 +92,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['delete-role']))
             return $this->forbiddenResponse();
 
         $roleDelete = $this->roleService->deleteRole($role->id);
@@ -102,7 +102,7 @@ class RoleController extends Controller
 
     public function showRolePermissions(Role $role)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['read-role']))
             return $this->forbiddenResponse();
 
         $rolePermissions = $this->roleService->getRolePermissions($role);
@@ -111,7 +111,7 @@ class RoleController extends Controller
 
     public function storeRolePermissions(Request $request, Role $role)
     {
-        if ($this->policyService->authorize(['admin']))
+        if (!$this->policyService->authorize(['admin'], ['update-role']))
             return $this->forbiddenResponse();
 
         try {
