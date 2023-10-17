@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\PermissionController;
+use App\Http\Controllers\Api\V1\BrandController;
 use Illuminate\Support\Facades\Route;
 
 // otp --------------------
@@ -54,6 +55,12 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
     Route::get('{category}/status/{status}','changeStatus');
 });
 
+// brands -------------------------
+Route::apiResource('brands', BrandController::class)->except('show');
+Route::controller(BrandController::class)->prefix('brands')->group(function () {
+    Route::post('search', 'searchBrand');
+    Route::get('{brand}/status/{status}','changeStatus');
+});
 
 Route::fallback((function () {
     return response()->json([
