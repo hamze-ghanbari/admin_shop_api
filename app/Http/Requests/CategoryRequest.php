@@ -16,7 +16,7 @@ class CategoryRequest extends FormRequest
             'name' => ['required', 'max:50', 'regex:/^([a-z A-Z]{1,50})$/'],
             'persian_name' => ['required', 'max:50', 'regex:/^([ ضصثقفغعهخحجچشسیبلاتنمکگپظطزر ذدئو.ء ِ]{1,50})$/'],
             'description' => ['required', 'max:5000', new BlackListRule()],
-//            'image' => 'required',
+            'image' => 'required',
             'status' => [Rule::in([1, 2])],
             'show_in_menu' => [Rule::in([1, 2])],
             'parent_id' => ['nullable', 'exists:categories,id', new BlackListRule()]
