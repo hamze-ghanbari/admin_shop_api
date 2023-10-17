@@ -4,19 +4,20 @@ namespace App\Providers;
 
 use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
+use App\Observers\CategoryObserver;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
     protected $observers = [
         User::class => [UserObserver::class],
-        Role::class => [RoleObserver::class]
+        Role::class => [RoleObserver::class],
+        Category::class => [CategoryObserver::class],
     ];
     /**
      * The event to listener mappings for the application.
