@@ -98,7 +98,8 @@ return [
     'useCache' => [
         'users' => true,
         'roles' => true,
-        'categories' => true
+        'categories' => true,
+        'brands' => true
     ],
     /*
     |--------------------------------------------------------------------------
