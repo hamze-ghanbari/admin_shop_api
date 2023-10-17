@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repository\Contracts\BrandRepositoryInterface;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use App\Repository\Contracts\OtpRepositoryInterface;
 use App\Repository\Contracts\RoleRepositoryInterface;
 use App\Repository\Contracts\UserRepositoryInterface;
+use App\Repository\Eloquent\BrandRepository;
 use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\OtpRepository;
 use App\Repository\Eloquent\RoleRepository;
@@ -16,10 +18,11 @@ class RepositoryServiceProvider extends ServiceProvider
 {
 
     public array $singletons = [
-        CategoryRepositoryInterface::class => CategoryRepository::class,
         OtpRepositoryInterface::class => OtpRepository::class,
         UserRepositoryInterface::class => UserRepository::class,
         RoleRepositoryInterface::class => RoleRepository::class,
+        CategoryRepositoryInterface::class => CategoryRepository::class,
+        BrandRepositoryInterface::class => BrandRepository::class,
     ];
 
     public function register(): void

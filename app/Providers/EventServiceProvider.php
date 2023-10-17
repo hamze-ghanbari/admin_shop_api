@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
+use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
@@ -18,6 +20,7 @@ class EventServiceProvider extends ServiceProvider
         User::class => [UserObserver::class],
         Role::class => [RoleObserver::class],
         Category::class => [CategoryObserver::class],
+        Brand::class => [BrandObserver::class],
     ];
     /**
      * The event to listener mappings for the application.
