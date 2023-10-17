@@ -42,7 +42,19 @@ class DatabaseSeeder extends Seeder
             'read-user' => 'دیدن کاربر',
             'create-user' => 'ایجاد کاربر',
             'edit-user' => 'ویرایش کاربر',
-            'delete-user' => 'حذف کاربر'
+            'delete-user' => 'حذف کاربر',
+            'read-role' => 'دیدن نقش',
+            'create-role' => 'ایجاد نقش',
+            'edit-role' => 'ویرایش نقش',
+            'delete-role' => 'حذف نقش',
+            'read-category' => 'دیدن دسته بندی',
+            'create-category' => 'ایجاد دسته بندی',
+            'edit-category' => 'ویرایش دسته بندی',
+            'delete-category' => 'حذف دسته بندی',
+            'read-brand' => 'دیدن برند',
+            'create-brand' => 'ایجاد برند',
+            'edit-brand' => 'ویرایش برند',
+            'delete-brand' => 'حذف برند',
         ];
 
         foreach ($permissions as $key => $value) {
