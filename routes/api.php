@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(OtpController::class)->group(function () {
     Route::post('login', 'otp');
     Route::post('confirm', 'confirm');
-    Route::get('resend/{token}', 'resendOtpCode');
+    Route::post('resendCode', 'resendOtpCode');
     Route::get('logout', 'logout');
 });
 
