@@ -26,7 +26,7 @@ class ConfirmOtpRequest extends FormRequest
     {
         return [
             'confirm_code' => ['bail', 'required', 'min:5', 'max:5', 'regex:/^[0-9]+$/', new BlackListRule()],
-            'token' => ['bail', 'required', 'string']
+            'user_name' => ['bail', 'required', 'string']
         ];
     }
 

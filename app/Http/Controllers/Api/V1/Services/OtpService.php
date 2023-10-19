@@ -81,16 +81,16 @@ class OtpService
 
     public function createOtp($userId, $userName, $type): Otp
     {
-        $otpCode = substr(rand(0, microtime(true)), 0, 5);
-        $token = Str::random(60);
-
         return $this->otpRepository->create([
-            'token' => $token,
             'user_id' => $userId,
-            'otp_code' => $otpCode,
+            'otp_code' => randomNumber(),
             'login_id' => $userName,
             'type' => $type
         ]);
+    }
+
+    public function generateAccessToken(Request $request){
+        return $request->user()->createToken('AccessToken')->accessToken;
     }
 
     public function addRoleToUser()
@@ -104,21 +104,26 @@ class OtpService
         }
     }
 
-    public function getOtp($token): mixed
+    public function getOtp($userName): mixed
     {
         return $this->otpRepository->findWhere([
-            'token' => $token,
+            'login_id' => $userName,
             'used' => UsedEnum::NotUsed->value,
             'status' => StatusEnum::Active->value,
-//            ['created_at', '<=', Carbon::now()->subMinutes(2)->toDateTimeString()]
-        ])->first();
+        ])->orderBy('created_at', 'desc')->first();
+//        return $this->otpRepository->findWhere([
+//            'token' => $token,
+//            'used' => UsedEnum::NotUsed->value,
+//            'status' => StatusEnum::Active->value,
+////            ['created_at', '<=', Carbon::now()->subMinutes(2)->toDateTimeString()]
+//        ])->first();
 
     }
 
-    public function getOtpWithUser($token)
-    {
-        return $this->otpRepository->findWhere(['token' => $token])->first();
-    }
+//    public function getOtpWithUser($token)
+//    {
+//        return $this->otpRepository->findWhere(['token' => $token])->first();
+//    }
 
     public function updateOtpCode($otp)
     {

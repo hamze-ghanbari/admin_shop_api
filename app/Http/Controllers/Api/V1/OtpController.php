@@ -70,13 +70,19 @@ class OtpController extends Controller
         } elseif ($data['type'] === TypeEnum::Mobile) {
             // send sms
         }
-        return $this->apiResponse(['token' => $otp->token, 'code' => $otp->otp_code]);
+        return $this->apiResponse([
+            'code' => $otp->otp_code,
+            'user_name' => $userName
+//            'has_account' => isset($data['user'])
+        ]);
     }
 
     public function confirm(ConfirmOtpRequest $request)
     {
-        $token = $request->input('token');
-        $otp = $this->otpService->getOtp($token);
+        $userName = $request->input('user_name');
+        $otp = $this->otpService->getOtp($userName);
+//        $token = $request->input('token');
+//        $otp = $this->otpService->getOtp($token);
         $errorMessage = 'کد وارد شده معتبر نمی باشد';
 
         if (empty($otp)) {
@@ -111,13 +117,13 @@ class OtpController extends Controller
 
             $this->otpService->addRoleToUser();
 
-            $accessToken = $request->user()->createToken('AccessToken')->accessToken;
-//            $expireAt = $accessToken->expires_at;
+            $accessToken = $this->otpService->generateAccessToken($request);
+//            $expireAt = $accessToken->expire;
             DB::commit();
             return $this->apiResponse([
                 'user' => auth()->user(),
                 'accessToken' => $accessToken,
-//                    'expireAt' => '$expireAt'
+//                    'expireAt' => $expireAt
 //                    'expireAt' => Carbon::parse('$expireAt')->toDateTimeString()
             ]);
         } catch (\Exception) {
@@ -126,24 +132,28 @@ class OtpController extends Controller
         }
     }
 
-    public function resendOtpCode($token)
+    public function resendOtpCode(Request $request)
     {
-
-        $otp = $this->otpService->getOtpWithUser($token);
+        $userName = $request->input('user_name');
+        $otp = $this->otpService->getOtp($userName);
 
         if (!isset($otp) || Carbon::now()->toDateTimeString() < (new Carbon($otp->created_at))->addMinutes(2)->toDateTimeString()) {
-            return $this->failedValidationResponse('time error');
+            // time error
+            return $this->failedValidationResponse('Not Found', 404);
         }
 
         $otpData = $this->otpService->createOtp($otp->user_id, $otp->login_id, $otp->type);
 
         if ($otp->type === TypeEnum::Email->value) {
-            $this->otpService->sendEmail($otpData->otp_code, $otp->login_id);
+            $this->otpService->emailRegisteredEvent($otpData->otp_code, $otp->login_id);
         } elseif ($otp->type === TypeEnum::Mobile->value) {
             // send sms
         }
 
-        return $this->apiResponse(['token' => $otpData->token, 'code' => $otpData->otp_code]);
+        return $this->apiResponse([
+            'code' => $otpData->otp_code,
+            'userName' => $userName
+            ]);
 
     }
 
