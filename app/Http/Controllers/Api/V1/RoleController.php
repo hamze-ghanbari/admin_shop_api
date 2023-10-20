@@ -7,17 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
 use App\Http\Resources\PermissionCollection;
 use App\Http\Resources\RoleCollection;
-use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserCollection;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Role;
-use App\Models\User;
-use App\Traits\ApiResponse;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ApiResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Response;
+
 
 class RoleController extends Controller
 {

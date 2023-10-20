@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RoleRequest extends FormRequest

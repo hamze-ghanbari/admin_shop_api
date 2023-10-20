@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Casts\PersianDateCast;
-use App\Traits\HasPermission;
+use App\Traits\Authorization\HasPermission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;

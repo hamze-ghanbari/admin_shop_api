@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Traits\ApiPaginationResponse;
+use App\Traits\Response\ApiPaginationResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

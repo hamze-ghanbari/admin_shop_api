@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Services\PolicyService\PolicyService;
-use App\Traits\ApiResponse;
+use App\Traits\Response\ApiResponse;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

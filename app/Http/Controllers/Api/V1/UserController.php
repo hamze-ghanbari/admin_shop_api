@@ -11,8 +11,8 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\User;
-use App\Traits\ApiResponse;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ApiResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

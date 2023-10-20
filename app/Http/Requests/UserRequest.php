@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
 use App\Rules\NationalCodeRule;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\BlackListRule;
 use App\Rules\EmailPhoneRule;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 

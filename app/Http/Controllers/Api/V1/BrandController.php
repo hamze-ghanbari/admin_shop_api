@@ -9,8 +9,8 @@ use App\Http\Resources\BrandCollection;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Brand;
-use App\Traits\ApiResponse;
-use App\Traits\ValidationResponse;
+use App\Traits\Response\ApiResponse;
+use App\Traits\Response\ValidationResponse;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 

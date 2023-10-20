@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\V1\Services\PermissionService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionCollection;
 use App\Http\Services\PolicyService\PolicyService;
-use App\Traits\ApiResponse;
+use App\Traits\Response\ApiResponse;
 
 
 class PermissionController extends Controller
