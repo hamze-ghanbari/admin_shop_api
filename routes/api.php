@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\PermissionController;
 use App\Http\Controllers\Api\V1\BrandController;
+use App\Http\Controllers\Api\V1\MailController;
 use Illuminate\Support\Facades\Route;
 
 // otp --------------------
@@ -52,14 +53,22 @@ Route::get('permissions', PermissionController::class);
 Route::apiResource('categories', CategoryController::class)->except('show');
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::post('search', 'searchCategory');
-    Route::get('{category}/status/{status}','changeStatus');
+    Route::get('{category}/status/{status}', 'changeStatus');
 });
 
 // brands -------------------------
 Route::apiResource('brands', BrandController::class)->except('show');
 Route::controller(BrandController::class)->prefix('brands')->group(function () {
     Route::post('search', 'searchBrand');
-    Route::get('{brand}/status/{status}','changeStatus');
+    Route::get('{brand}/status/{status}', 'changeStatus');
+});
+
+// mails
+Route::apiResource('mails', MailController::class);
+Route::controller(MailController::class)->prefix('mails')->group(function () {
+    Route::post('search', 'searchMail');
+    Route::get('{mail}/send', 'sendMail');
+    Route::get('{mail}/status/{status}', 'changeStatus');
 });
 
 Route::fallback((function () {
