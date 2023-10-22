@@ -16,6 +16,7 @@ class EmailService implements MessageInterface
     ];
     private $to;
     private $objectName;
+    private $files;
 
     public function __construct(){
         $this->from(config('mail.from.address'), config('mail.from.name'));
@@ -24,7 +25,7 @@ class EmailService implements MessageInterface
 
 
     public function fire(){
-        Mail::to($this->getTo())->send(new $this->objectName($this->getDetails(), $this->getSubject(), $this->getFrom()));
+        Mail::to($this->getTo())->send(new $this->objectName($this->getDetails(), $this->getSubject(), $this->getFrom(), $this->getFiles()));
         return true;
     }
 
@@ -79,8 +80,14 @@ class EmailService implements MessageInterface
         return $this;
     }
 
+    public function files(array $files){
+        $this->files = $files;
+        return $this;
+    }
 
-
+    public function getFiles(){
+        return $this->files;
+    }
 
 
 }
