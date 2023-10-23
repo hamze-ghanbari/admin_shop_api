@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Services;
 
 use App\Http\Requests\MailRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
-use App\Http\Services\MessageService\Algoritms\Email\EmailService;
+use App\Http\Services\MessageService\Algorithms\Email\EmailService;
 use App\Http\Services\MessageService\MessageService;
 use App\Jobs\SendEmailToUsers;
 use App\Mail\PublicMail;

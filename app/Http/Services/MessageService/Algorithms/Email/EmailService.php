@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\MessageService\Algoritms\Email;
+namespace App\Http\Services\MessageService\Algorithms\Email;
 
 use App\Http\Services\MessageService\MessageInterface;
 use Illuminate\Support\Facades\Mail;

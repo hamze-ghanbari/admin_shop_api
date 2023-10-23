@@ -7,7 +7,7 @@ use App\Enums\StatusEnum;
 use App\Enums\TypeEnum;
 use App\Enums\UsedEnum;
 use App\Events\UserRegistered;
-use App\Http\Services\MessageService\Algoritms\Email\EmailService;
+use App\Http\Services\MessageService\Algorithms\Email\EmailService;
 use App\Http\Services\MessageService\MessageService;
 use App\Mail\OtpMail;
 use App\Models\Otp;
