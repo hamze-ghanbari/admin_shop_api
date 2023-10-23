@@ -26,6 +26,10 @@ interface BaseRepositoryInterface
 
     public function findWhereBetween($field, array $values, $columns = ['*']);
 
+    public function whereNotNull(array|string $columns, $boolean = 'and');
+
+    public function whereNull(array|string $columns, $boolean = 'and');
+
     public function exists(array $where);
 
     public function create(array $attributes);

@@ -71,6 +71,16 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->whereBetween($field, $values)->get($columns);
     }
 
+    public function whereNotNull(array|string $columns, $boolean = 'and')
+    {
+        return $this->model->whereNotNull($columns, $boolean)->get();
+    }
+
+    public function whereNull(array|string $columns, $boolean = 'and')
+    {
+        return $this->model->whereNull($columns, $boolean)->get();
+    }
+
     public function exists(array $where){
         return $this->findWhere($where)->exists();
     }
