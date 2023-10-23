@@ -81,6 +81,10 @@ class OtpService
 
     public function createOtp($userId, $userName, $type): Otp
     {
+        $this->otpRepository
+            ->findWhere(['user_id' => $userId, 'status' => StatusEnum::Active->value, 'used' => UsedEnum::NotUsed->value])
+            ->update(['status' => StatusEnum::InActive->value]);
+
         return $this->otpRepository->create([
             'user_id' => $userId,
             'otp_code' => randomNumber(),
