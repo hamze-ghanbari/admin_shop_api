@@ -53,13 +53,12 @@ class MailService
         return $this->mailRepository->delete($id);
     }
 
-    public function sendMailToUsers(Mail $mail)
+    public function sendMailToUsers(Mail $mail, array $attachments = [])
     {
-        SendEmailToUsers::dispatch($mail)->onQueue('mailUsers');
+        SendEmailToUsers::dispatch($mail, $attachments)->onQueue('mailUsers');
     }
 
-
-    public function sendMail(Mail $email)
+    public function sendMail(Mail $email, array $attachments = [])
     {
         // get files from mail files table
         $files = [];
@@ -75,7 +74,7 @@ class MailService
             ->details($details)
             ->subject($email->subject)
             ->mailClass(PublicMail::class)
-            ->files(['uploads/brands/2023/10/17/G8yOP8cKkEWvzfYsxjEV.jpeg' => ['name' => 'test.jpeg', 'mime' => 'image/jpeg']]);
+            ->files($attachments);
 
         foreach ($emails as $email) {
             $mail->to($email);
