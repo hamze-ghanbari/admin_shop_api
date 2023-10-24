@@ -33,9 +33,9 @@ class PublicMail extends Mailable
     {
         $attachments = [];
         if ($this->files) {
-            foreach ($this->files as $file => $name) {
-                array_push($attachments, Attachment::fromPath(public_path($file))
-                    ->as($name['name'])->withMime($name['mime']));
+            foreach ($this->files as $value) {
+                array_push($attachments, Attachment::fromPath(public_path($value['path']))
+                    ->as($value['name'])->withMime($value['mime']));
             }
         }
 
