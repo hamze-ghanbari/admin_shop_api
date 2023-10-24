@@ -9,10 +9,11 @@ function setAttachments(array $filespath, array $name = [], array $mime = []): a
 {
     $result = [];
     foreach ($filespath as $key => $path) {
+
         array_push($result, [
             'path' => $path,
-            'name' => $name[$key],
-            'mime' => $mime[$key]
+            'name' => $name[$key] ?? null,
+            'mime' => $mime[$key] ?? null
         ]);
     }
     return $result;
