@@ -18,7 +18,8 @@ class SendEmailToUsers implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public Mail $mail
+        public Mail $mail,
+        public array $attachments
     )
     {
     }
@@ -28,7 +29,6 @@ class SendEmailToUsers implements ShouldQueue
      */
     public function handle(MailService $mailService): void
     {
-        $mailService->sendMail($this->mail);
-
+        $mailService->sendMail($this->mail, $this->attachments);
     }
 }
