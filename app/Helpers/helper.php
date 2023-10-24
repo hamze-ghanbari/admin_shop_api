@@ -5,7 +5,21 @@ function randomNumber($count = 5): string
     return substr(rand(0, microtime(true)), 0, $count);
 }
 
-function convertNumbersToEnglish($string) {
+function setAttachments(array $filespath, array $name = [], array $mime = []): array
+{
+    $result = [];
+    foreach ($filespath as $key => $path) {
+        array_push($result, [
+            'path' => $path,
+            'name' => $name[$key],
+            'mime' => $mime[$key]
+        ]);
+    }
+    return $result;
+}
+
+function convertNumbersToEnglish($string)
+{
     $newNumbers = range(0, 9);
     // 1. Persian HTML decimal
     $persianDecimal = array('&#1776;', '&#1777;', '&#1778;', '&#1779;', '&#1780;', '&#1781;', '&#1782;', '&#1783;', '&#1784;', '&#1785;');
@@ -16,9 +30,9 @@ function convertNumbersToEnglish($string) {
     // 4. Persian Numeric
     $persian = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
 
-    $string =  str_replace($persianDecimal, $newNumbers, $string);
-    $string =  str_replace($arabicDecimal, $newNumbers, $string);
-    $string =  str_replace($arabic, $newNumbers, $string);
+    $string = str_replace($persianDecimal, $newNumbers, $string);
+    $string = str_replace($arabicDecimal, $newNumbers, $string);
+    $string = str_replace($arabic, $newNumbers, $string);
     return str_replace($persian, $newNumbers, $string);
 }
 
@@ -75,6 +89,9 @@ function validateNationalCode($nationalCode): bool
         }
 
     }
+
+
+
 
 //    function pdoErrorMessage(int $code): string{
 //        $codeMessages = [
