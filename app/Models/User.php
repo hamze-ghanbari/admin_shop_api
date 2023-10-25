@@ -43,7 +43,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'mobile_verified_at' => 'datetime',
-//        'birth_date' => PersianDateCast::class,
+        'birth_date' => PersianDateCast::class,
     ];
 
 //    protected function createdAt(): Attribute{
