@@ -28,4 +28,23 @@ class MailRequest extends FormRequest
             'user_id' => 'bail|nullable|exists:users,id'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'subject' => 'موضوع ایمیل',
+            'body' => 'متن ایمیل',
+            'published_at' => 'تاریخ ارسال',
+            'status' => 'وضعیت نمایش',
+            'shipping_status' => 'وضعیت ارسال',
+            'user_id' => 'نام کاربر'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'published_at.date_format' => 'فرمت تاریخ معتبر نمی باشد'
+        ];
+    }
 }
