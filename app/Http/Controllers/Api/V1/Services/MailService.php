@@ -75,12 +75,17 @@ class MailService
             ->subject($email->subject)
             ->mailClass(PublicMail::class)
             ->files($attachments);
-
-        foreach ($emails as $email) {
-            $mail->to($email);
-            $messagesService = new MessageService($emailService);
-            $messagesService->send();
-        }
+            if(!isset($email->user_id)) {
+                foreach ($emails as $email) {
+                    $mail->to($email);
+                    $messagesService = new MessageService($emailService);
+                    $messagesService->send();
+                }
+            }else{
+                $mail->to($email->user->email);
+                $messagesService = new MessageService($emailService);
+                $messagesService->send();
+            }
 
     }
 
