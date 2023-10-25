@@ -21,7 +21,7 @@ class UserFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'national_code' => '9'.fake()->randomNumber(9),
-            'mobile' => '0910456'. fake()->randomNumber(4),
+            'mobile' => '0910'. fake()->randomNumber(7),
             'email' => fake()->email(),
         ];
     }
