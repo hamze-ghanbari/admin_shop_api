@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\PersianDateCast;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,11 @@ class Mail extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'published_at' => PersianDateCast::class,
+    ];
+
 
     public function scopeSearch(Builder $query, $term)
     {
