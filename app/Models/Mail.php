@@ -18,6 +18,9 @@ class Mail extends Model
         'published_at' => PersianDateCast::class,
     ];
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function scopeSearch(Builder $query, $term)
     {
