@@ -43,6 +43,11 @@ class MailController extends Controller
     }
 
     public function sendMail(Mail $mail){
+//        $attachments = setAttachments(
+//            ['uploads/brands/2023/10/17/G8yOP8cKkEWvzfYsxjEV.jpeg', 'uploads/category_product/2023/10/17/pos5ZrVK08CZgmflmN1c.jpeg'],
+//            ['test.jpeg', 'category.png'],
+//            ['image/jpeg', 'image/png']
+//        );
         $this->mailService->sendMailToUsers($mail);
         return $this->apiResponse(null);
     }
