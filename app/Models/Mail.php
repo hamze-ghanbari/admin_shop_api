@@ -22,6 +22,10 @@ class Mail extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function files(){
+        return $this->hasMany(MailFile::class);
+    }
+
     public function scopeSearch(Builder $query, $term)
     {
         return $query->when($term, function(Builder $query) use ($term){

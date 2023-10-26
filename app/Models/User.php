@@ -62,6 +62,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class);
     }
 
+    public function mails(){
+        return $this->hasMany(Mail::class);
+    }
 
     public function scopeSearch(Builder $query, $term = null, $time = null)
     {
