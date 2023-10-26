@@ -19,7 +19,6 @@ class SendEmailToUsers implements ShouldQueue
      */
     public function __construct(
         public Mail $mail,
-        public array $attachments
     )
     {
     }
@@ -29,6 +28,6 @@ class SendEmailToUsers implements ShouldQueue
      */
     public function handle(MailService $mailService): void
     {
-        $mailService->sendMail($this->mail, $this->attachments);
+        $mailService->sendMail($this->mail);
     }
 }
