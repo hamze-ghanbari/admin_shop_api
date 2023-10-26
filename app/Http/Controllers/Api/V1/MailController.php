@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\V1\Services\MailService;
-use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\MailCollection;
 use App\Http\Resources\MailResource;
 use App\Http\Services\PolicyService\PolicyService;
@@ -42,13 +41,13 @@ class MailController extends Controller
         return new MailCollection($this->mailService->searchMail($request->input('search')));
     }
 
-    public function sendMail(Mail $mail){
-//        $attachments = setAttachments(
-//            ['uploads/brands/2023/10/17/G8yOP8cKkEWvzfYsxjEV.jpeg', 'uploads/category_product/2023/10/17/pos5ZrVK08CZgmflmN1c.jpeg'],
-//            ['test.jpeg', 'category.png'],
-//            ['image/jpeg', 'image/png']
-//        );
-        $this->mailService->sendMailToUsers($mail);
+    public function sendGroupMail(Mail $mail){
+        $this->mailService->dispatchGroupEmail($mail);
+        return $this->apiResponse(null);
+    }
+
+    public function sendSingleMail(Mail $mail){
+        $this->mailService->dispatchSingleEmail($mail);
         return $this->apiResponse(null);
     }
 
