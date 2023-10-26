@@ -67,7 +67,8 @@ Route::controller(BrandController::class)->prefix('brands')->group(function () {
 Route::apiResource('mails', MailController::class);
 Route::controller(MailController::class)->prefix('mails')->group(function () {
     Route::post('search', 'searchMail');
-    Route::get('{mail}/send', 'sendMail');
+    Route::get('{mail}/sendGroup', 'sendGroupMail');
+    Route::get('{mail}/sendSingle', 'sendSingleMail');
     Route::get('{mail}/status/{status}', 'changeStatus');
 });
 
