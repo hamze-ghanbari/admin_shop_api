@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendEmailToUsers implements ShouldQueue
+class SendGroupEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class SendEmailToUsers implements ShouldQueue
      */
     public function handle(MailService $mailService): void
     {
-        $mailService->sendMail($this->mail);
+        $mailService->sendGroupMail($this->mail);
     }
 }
