@@ -6,4 +6,5 @@ interface MailRepositoryInterface extends BaseRepositoryInterface
 {
     public function getMailSearch($value);
 
+    public function getMails();
 }
