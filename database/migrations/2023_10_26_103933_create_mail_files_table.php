@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('mail_id')->constrained('mails')->onUpdate('cascade')->onDelete('cascade');
             $table->text('file_path');
+            $table->string('file_name', 150)->nullable()->default(null);
             $table->bigInteger('file_size');
-            $table->string('file_type');
+            $table->enum('mime_type', [
+                'text/csv', 'image/jpeg', 'image/png', 'audio/mpeg',
+                'video/mp4', 'application/pdf', 'image/webp', 'application/zip'
+            ]);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
