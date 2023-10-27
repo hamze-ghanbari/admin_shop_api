@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\PermissionController;
 use App\Http\Controllers\Api\V1\BrandController;
 use App\Http\Controllers\Api\V1\MailController;
+use App\Http\Controllers\Api\V1\MailFileController;
 use Illuminate\Support\Facades\Route;
 
 // otp --------------------
@@ -70,6 +71,10 @@ Route::controller(MailController::class)->prefix('mails')->group(function () {
     Route::get('{mail}/sendGroup', 'sendGroupMail');
     Route::get('{mail}/sendSingle', 'sendSingleMail');
     Route::get('{mail}/status/{status}', 'changeStatus');
+
+    // mail files
+    Route::apiResource('{mail}/files', MailFileController::class)->except('show');
+    Route::get('{mail}/files/{file}/status/{status}', 'changeStatus');
 });
 
 Route::fallback((function () {
