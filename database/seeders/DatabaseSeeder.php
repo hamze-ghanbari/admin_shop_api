@@ -58,7 +58,11 @@ class DatabaseSeeder extends Seeder
             'read-mail' => 'دیدن ایمیل',
             'create-mail' => 'ایجاد ا یمیل',
             'edit-mail' => 'ویرایش ایمیل',
-            'delete-mail' => 'حذف ایمیل'
+            'delete-mail' => 'حذف ایمیل',
+            'read-mail-file' => 'خواندن فایل ایمیل',
+            'create-mail-file' => 'ایجاد فایل ایمیل',
+            'edit-mail-file' => 'ویرایش فایل ایمیل',
+            'delete-mail-file' => 'حذف فایل ایمیل'
         ];
 
         foreach ($permissions as $key => $value) {
