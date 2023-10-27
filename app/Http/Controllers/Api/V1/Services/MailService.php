@@ -23,6 +23,9 @@ class MailService
 
     public function getAllMails()
     {
+        if($this->cacheApiService->useCache('mails')){
+            return $this->cacheApiService->cacheApi('mails', $this->mailRepository->paginate());
+        }
         return $this->mailRepository->paginate();
     }
 
