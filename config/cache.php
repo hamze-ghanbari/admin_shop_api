@@ -99,7 +99,9 @@ return [
         'users' => true,
         'roles' => true,
         'categories' => true,
-        'brands' => true
+        'brands' => true,
+        'mails' => true,
+        'mailFiles' => true
     ],
     /*
     |--------------------------------------------------------------------------
