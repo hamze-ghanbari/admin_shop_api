@@ -6,10 +6,14 @@ use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Mail;
+use App\Models\MailFile;
 use App\Models\Role;
 use App\Models\User;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
+use App\Observers\MailFileObserver;
+use App\Observers\MailObserver;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +25,8 @@ class EventServiceProvider extends ServiceProvider
         Role::class => [RoleObserver::class],
         Category::class => [CategoryObserver::class],
         Brand::class => [BrandObserver::class],
+        Mail::class => [MailObserver::class],
+        MailFile::class => [MailFileObserver::class]
     ];
     /**
      * The event to listener mappings for the application.
