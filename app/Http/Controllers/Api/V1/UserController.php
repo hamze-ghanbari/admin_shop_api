@@ -28,7 +28,7 @@ class UserController extends Controller
 //        $roles = 'admin';
 //        $permissions = 'read-user|create-user|edit-user|delete-user';
         $this->middleware('auth:api');
-        $this->middleware('limiter:5')->only('updateBirthDate', 'updateNationalCode', 'updateFullName',
+        $this->middleware('limiter:user,5')->only('updateBirthDate', 'updateNationalCode', 'updateFullName',
             'storeUserRoles', 'storeUserPermissions');
 //        $this->middleware("role:$roles,$permissions");
 

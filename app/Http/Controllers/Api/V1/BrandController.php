@@ -24,7 +24,7 @@ class BrandController extends Controller
     )
     {
         $this->middleware('auth:api');
-        $this->middleware('limiter:5')->only('store', 'update', 'changeStatus');
+        $this->middleware('limiter:brand,5')->only('store', 'update', 'changeStatus');
     }
 
     public function index()

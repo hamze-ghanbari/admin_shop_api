@@ -22,7 +22,7 @@ class OtpController extends Controller
     {
         $this->middleware('auth:api')->only('logout');
         $this->middleware('authenticated')->except('logout');
-        $this->middleware('limiter:5')->except('logout');
+        $this->middleware('limiter:otp,5')->except('logout');
     }
 
     public function otp(OtpRequest $request)

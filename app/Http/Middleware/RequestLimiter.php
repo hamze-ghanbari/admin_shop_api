@@ -13,9 +13,9 @@ class RequestLimiter
 {
     use ApiResponse;
 
-    public function handle(Request $request, Closure $next, int $attempt): Response
+    public function handle(Request $request, Closure $next, string $keyName, int $attempt): Response
     {
-        $key = 'otp:' . url()->current() . $request->ip();
+        $key = $keyName . url()->current() . $request->ip();
         $executed = RateLimiter::attempt(
             $key,
             $attempt,

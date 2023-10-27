@@ -26,7 +26,7 @@ class RoleController extends Controller
     )
     {
         $this->middleware('auth:api');
-        $this->middleware('limiter:5')->only('storeRolePermissions', 'store', 'update', 'changeStatus');
+        $this->middleware('limiter:role,5')->only('storeRolePermissions', 'store', 'update', 'changeStatus');
     }
 
     public function index()
