@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class MailFileCollection extends ResourceCollection
 {
     use ApiPaginationResponse;
+    public static $wrap = 'result';
 
     public function toArray(Request $request): array
     {
