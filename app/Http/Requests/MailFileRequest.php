@@ -20,11 +20,11 @@ class MailFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_path' => ['required', new BlackListRule()],
+            'file_path' => ['required'],
             'file_name' => ['nullable', 'max:150', new BlackListRule()],
             'status' => [Rule::in([0,1])],
-            'mime_type' => "mimetypes:text/csv,image/jpeg,image/png,audio/mpeg,video/mp4,application/pdf,image/webp,application/zip",
-            'mail_id' => 'required|exists:mails,id'
+//            'mime_type' => "mimetypes:text/csv,image/jpeg,image/png,audio/mpeg,video/mp4,application/pdf,image/webp,application/zip",
+//            'mail_id' => 'required|exists:mails,id'
         ];
     }
 
@@ -34,7 +34,7 @@ class MailFileRequest extends FormRequest
             'file_path' => 'فایل',
             'file_name' => 'نام فایل',
             'status' => 'وضعیت فایل',
-            'mime_type' => 'نوع فایل',
+//            'mime_type' => 'نوع فایل',
 //            'mail_id' => 'وضعیت ارسال',
         ];
     }
