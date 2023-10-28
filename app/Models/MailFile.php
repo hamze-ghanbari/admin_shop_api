@@ -10,6 +10,8 @@ class MailFile extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = ['id'];
+
     public function mail(){
         return $this->belongsTo(Mail::class);
     }
