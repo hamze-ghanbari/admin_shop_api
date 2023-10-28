@@ -20,9 +20,9 @@ class MailFileService
     {
     }
 
-    public function getAllMailFiles()
+    public function getAllMailFiles($mailId)
     {
-        return $this->mailFileRepository->paginate();
+        return $this->mailFileRepository->findWhere(['mail_id' => $mailId])->paginate();
     }
 
     public function updateMailFileStatus(MailFile $mailFile, $status)
@@ -32,14 +32,24 @@ class MailFileService
         ], $mailFile->id);
     }
 
-    public function updateMailFile(MailFileRequest $request, $mailId)
+    public function updateMailFile(MailFileRequest $request, $mailId, array $fileInfo)
     {
-        return $this->mailFileRepository->update($request->fields(), $mailId);
+        return $this->mailFileRepository->update($request->fields(attributes: [
+            'mail_id' => $mailId,
+            'file_path' => $fileInfo['path'],
+            'file_size' => $fileInfo['size'],
+            'mime_type' => $fileInfo['mime']
+        ]), $mailId);
     }
 
-    public function createMailFile(MailFileRequest $request)
+    public function createMailFile(MailFileRequest $request,int $mailId,array $fileInfo)
     {
-        return $this->mailFileRepository->create($request->fields());
+        return $this->mailFileRepository->create($request->fields(attributes: [
+            'mail_id' => $mailId,
+            'file_path' => $fileInfo['path'],
+            'file_size' => $fileInfo['size'],
+            'mime_type' => $fileInfo['mime']
+        ]));
     }
 
     public function deleteMailFile($id)
