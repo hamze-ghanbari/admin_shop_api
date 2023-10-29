@@ -74,7 +74,7 @@ Route::controller(MailController::class)->prefix('mails')->group(function () {
 
     // mail files
     Route::apiResource('{mail}/files', MailFileController::class)->except('show');
-    Route::get('{mail}/files/{file}/status/{status}', 'changeStatus');
+    Route::get('{mail}/files/{file}/status/{status}', [MailFileController::class, 'changeStatus']);
 });
 
 Route::fallback((function () {
