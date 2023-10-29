@@ -9,6 +9,7 @@ use App\Http\Services\UploadService\Algoritms\Base64File;
 use App\Http\Services\UploadService\UploadService;
 use App\Models\MailFile;
 use App\Repository\Contracts\MailFileRepositoryInterface;
+use Illuminate\Support\Facades\File;
 
 class MailFileService
 {
@@ -25,21 +26,21 @@ class MailFileService
         return $this->mailFileRepository->findWhere(['mail_id' => $mailId])->paginate();
     }
 
-    public function updateMailFileStatus(MailFile $mailFile, $status)
+    public function updateMailFileStatus(MailFile $file, $status)
     {
         return $this->mailFileRepository->update([
             'status' => (bool)$status
-        ], $mailFile->id);
+        ], $file->id);
     }
 
-    public function updateMailFile(MailFileRequest $request, $mailId, array $fileInfo)
+    public function updateMailFile(MailFileRequest $request, $fileId,  $mailId, array $fileInfo)
     {
         return $this->mailFileRepository->update($request->fields(attributes: [
             'mail_id' => $mailId,
             'file_path' => $fileInfo['path'],
             'file_size' => $fileInfo['size'],
             'mime_type' => $fileInfo['mime']
-        ]), $mailId);
+        ]), $fileId);
     }
 
     public function createMailFile(MailFileRequest $request,int $mailId,array $fileInfo)
@@ -57,6 +58,16 @@ class MailFileService
         return $this->mailFileRepository->delete($id);
     }
 
+    public function deleteImage($imagePath)
+    {
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+            $dirName = dirname($imagePath);
+            if (File::allFiles($dirName) === []) {
+                File::deleteDirectory($dirName);
+            }
+        }
+    }
 
     public function uploadFile($image)
     {
