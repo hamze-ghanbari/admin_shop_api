@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repository\Contracts\BannerRepositoryInterface;
 use App\Repository\Contracts\BrandRepositoryInterface;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use App\Repository\Contracts\MailFileRepositoryInterface;
@@ -9,6 +10,7 @@ use App\Repository\Contracts\MailRepositoryInterface;
 use App\Repository\Contracts\OtpRepositoryInterface;
 use App\Repository\Contracts\RoleRepositoryInterface;
 use App\Repository\Contracts\UserRepositoryInterface;
+use App\Repository\Eloquent\BannerRepository;
 use App\Repository\Eloquent\BrandRepository;
 use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\MailFileRepository;
@@ -28,7 +30,8 @@ class RepositoryServiceProvider extends ServiceProvider
         CategoryRepositoryInterface::class => CategoryRepository::class,
         BrandRepositoryInterface::class => BrandRepository::class,
         MailRepositoryInterface::class => MailRepository::class,
-        MailFileRepositoryInterface::class => MailFileRepository::class
+        MailFileRepositoryInterface::class => MailFileRepository::class,
+        BannerRepositoryInterface::class => BannerRepository::class
     ];
 
     public function register(): void
