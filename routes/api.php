@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\OtpController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\RoleController;
@@ -76,6 +77,9 @@ Route::controller(MailController::class)->prefix('mails')->group(function () {
     Route::apiResource('{mail}/files', MailFileController::class)->except('show');
     Route::get('{mail}/files/{file}/status/{status}', [MailFileController::class, 'changeStatus']);
 });
+
+// banners
+Route::apiResource('banners', BannerController::class);
 
 Route::fallback((function () {
     return response()->json([
