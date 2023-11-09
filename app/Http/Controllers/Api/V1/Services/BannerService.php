@@ -29,32 +29,21 @@ class BannerService
         return $this->bannerRepository->paginate();
     }
 
-//    public function searchBanner($value){
-//        return $this->bannerRepository->getBannerSearch($value);
-//    }
-//
-//    public function categoryExists(string $name)
-//    {
-//        return $this->bannerRepository->getBannerWithTrashed($name);
-//    }
+    public function searchBanner($value){
+        return $this->bannerRepository->getBannerSearch($value);
+    }
 
     public function createBanner(BannerRequest $request, $image)
     {
         $this->bannerRepository->create($request->fields(attributes: [
-            'slug' => $request->fields()['name'],
-            'image' => $image
+            'image_path' => $image
         ]));
-    }
-
-    public function bannerExists(string $name){
-        return $this->bannerRepository->getBannerWithTrashed($name);
     }
 
     public function updateBanner(BannerRequest $request, $bannerId, $imageUrl)
     {
         return $this->bannerRepository->update($request->fields(attributes: [
-            'slug' => $request->fields()['name'],
-            'image' => $imageUrl
+            'image_path' => $imageUrl
         ]), $bannerId);
     }
 
