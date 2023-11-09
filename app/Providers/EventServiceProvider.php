@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
+use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Mail;
 use App\Models\MailFile;
 use App\Models\Role;
 use App\Models\User;
+use App\Observers\BannerObserver;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\MailFileObserver;
@@ -26,7 +28,8 @@ class EventServiceProvider extends ServiceProvider
         Category::class => [CategoryObserver::class],
         Brand::class => [BrandObserver::class],
         Mail::class => [MailObserver::class],
-        MailFile::class => [MailFileObserver::class]
+        MailFile::class => [MailFileObserver::class],
+        Banner::class => [BannerObserver::class]
     ];
     /**
      * The event to listener mappings for the application.
