@@ -12,4 +12,8 @@ class BannerRepository extends BaseRepository implements BannerRepositoryInterfa
         return Banner::class;
     }
 
+    public function getBannerSearch($value){
+        return $this->getModel()->search($value)->paginate();
+    }
+
 }
