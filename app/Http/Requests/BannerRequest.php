@@ -14,22 +14,24 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-//            'name' => ['required', 'max:50', 'regex:/^([a-z A-Z]{1,50})$/'],
-//            'persian_name' => ['required', 'max:50', 'regex:/^([ضصثقفغعهخحجچشسیبلاتنمکگپظطزرذدئو.ء ِ]{1,50})$/'],
-//            'description' => ['required', 'max:5000', new BlackListRule()],
-//            'image' => 'required',
-//            'status' => [Rule::in([1, 2])],
+            'title' => ['required', 'max:100', new BlackListRule()],
+            'url' => ['required', new BlackListRule()],
+            'start_date' => ['required', 'date_format:Y/m/d'],
+            'end_date' => ['required', 'date_format:Y/m/d'],
+            'image_path' => 'required',
+            'status' => [Rule::in([1, 2])],
         ];
     }
 
     public function attributes()
     {
         return [
-//            'name' => 'نام برند (انگلیسی)',
-//            'persian_name' => 'نام برند (فارسی)',
-//            'description' => 'توضیحات برند',
-//            'image' => 'تصویر برند',
-//            'status' => 'وضعیت',
+            'title' => 'عنوان',
+            'url' => 'لینک',
+            'start_date' => 'تاریخ شروع نمایش',
+            'end_date' => 'تاریخ پایان نمایش',
+            'image_path' => 'تصویر',
+            'status' => 'وضعیت',
         ];
     }
 
