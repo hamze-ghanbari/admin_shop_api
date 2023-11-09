@@ -80,6 +80,9 @@ Route::controller(MailController::class)->prefix('mails')->group(function () {
 
 // banners
 Route::apiResource('banners', BannerController::class);
+Route::post('banners/search', [BannerController::class, 'searchBanner']);
+Route::get('banners/{banner}/status/{status}', [BannerController::class, 'changeStatus']);
+
 
 Route::fallback((function () {
     return response()->json([
