@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use BadMethodCallException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -54,6 +55,13 @@ class Handler extends ExceptionHandler
                     'hasError' => true,
                     'result' => null
                 ], 405);
+            }elseif($e instanceof BadMethodCallException){
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Method Not Found',
+                    'hasError' => true,
+                    'result' => null
+                ], 404);
             }
         });
     }
