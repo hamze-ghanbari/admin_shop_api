@@ -34,6 +34,13 @@ class BannerController extends Controller
         return new BannerCollection($this->bannerService->getAllBanners());
     }
 
+    public function displayableBanners(){
+        if (!$this->policyService->authorize(['admin'], ['read-banner']))
+            return $this->forbiddenResponse();
+
+        return new BannerCollection($this->bannerService->getDisplayableBanners());
+    }
+
     public function searchBanner(Request $request)
     {
         if (!$this->policyService->authorize(['admin'], ['read-banner']))
