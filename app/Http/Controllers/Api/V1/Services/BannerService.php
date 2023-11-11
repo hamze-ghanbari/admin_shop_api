@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Services;
 
+use App\Enums\StatusEnum;
 use App\Http\Requests\BannerRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
@@ -27,6 +28,14 @@ class BannerService
             return $this->cacheApiService->cacheApi('banners', $this->bannerRepository->paginate());
         }
         return $this->bannerRepository->paginate();
+    }
+
+    public function getDisplayableBanners()
+    {
+        if($this->cacheApiService->useCache('banners')){
+            return $this->cacheApiService->cacheApi('banners',  $this->bannerRepository->displayableBanners());
+        }
+        return $this->bannerRepository->displayableBanners();
     }
 
     public function searchBanner($value){
