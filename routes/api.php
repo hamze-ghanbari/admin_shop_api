@@ -79,6 +79,7 @@ Route::controller(MailController::class)->prefix('mails')->group(function () {
 });
 
 // banners
+Route::get('banners/all', [BannerController::class, 'displayableBanners']);
 Route::apiResource('banners', BannerController::class);
 Route::post('banners/search', [BannerController::class, 'searchBanner']);
 Route::get('banners/{banner}/status/{status}', [BannerController::class, 'changeStatus']);
