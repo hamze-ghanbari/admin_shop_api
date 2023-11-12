@@ -15,4 +15,8 @@ class Base64File implements \App\Http\Services\UploadService\UploadInterface
     {
        return $this->imageService->base64Save($this->image);
     }
+
+    public function uploadIndexFile(): array | bool{
+        return $this->imageService->createIndexAndSaveBase64($this->image);
+    }
 }

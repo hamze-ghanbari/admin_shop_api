@@ -19,6 +19,49 @@ class ImageService extends ImageToolsService
         return $result ? $this->getImageAddress() : false;
     }
 
+    public function createIndexAndSaveBase64($image)
+    {
+        $imageSizes = Config::get('image.index-image-sizes');
+
+//        $this->setImage($image);
+
+
+
+        $this->getImageDirectory() ?? $this->setImageDirectory(date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d'));
+        $this->setImageDirectory($this->getImageDirectory() . DIRECTORY_SEPARATOR . time());
+
+//        $this->getImageName() ?? $this->setImageName(time());
+        $imageData = $this->setBase64NameImage($image);
+        $this->setImageFormat($imageData['extension']);
+        $this->setImageName($imageData['imageName']);
+        $imageName = $this->getImageName();
+
+        $indexArray = [];
+
+        foreach ($imageSizes as $sizeAlias => $imageSize) {
+            $currentImageName = $imageName . '_' . $sizeAlias;
+            $this->setImageName($currentImageName);
+
+            $this->provider();
+
+            $result = Image::make($image)->fit($imageSize['width'], $imageSize['height'])->save($this->getImageAddress(), null, $this->getImageFormat());
+
+            if ($result) {
+                $indexArray[$sizeAlias] = $this->getImageAddress();
+            } else {
+                return false;
+            }
+        }
+
+        $images['indexArray'] = $indexArray;
+        $images['directory'] = $this->getFinalImageDirectory();
+        $images['currentImage'] = Config::get('image.default-current-index-image');
+
+        return $images;
+
+    }
+
+
     public function save($image)
     {
         $this->setImage($image);

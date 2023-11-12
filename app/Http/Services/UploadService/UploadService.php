@@ -15,4 +15,8 @@ class UploadService
     {
         return $this->upload->upload();
     }
+
+    public function uploadIndexFile(){
+        return $this->upload->uploadIndexFile();
+    }
 }
