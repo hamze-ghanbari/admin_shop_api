@@ -111,7 +111,7 @@ class BannerController extends Controller
 
         $bannerDelete = $this->bannerService->deleteBanner($banner->id);
 
-        $imageService->deleteImage($banner->image_path);
+        $this->bannerService->deleteImages($banner->image_path);
         return $this->apiResponse(null, hasError: (bool)$bannerDelete);
     }
 }
