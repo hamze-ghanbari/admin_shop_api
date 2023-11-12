@@ -68,13 +68,19 @@ class BannerService
         return $this->bannerRepository->delete($id);
     }
 
+    public function deleteImages($image_path){
+        foreach ($image_path['indexArray'] as $path){
+            $this->imageService->deleteImage($path);
+        }
+    }
+
     public function uploadImage($image)
     {
         $this->imageService->setExclusiveDirectory('uploads' . DIRECTORY_SEPARATOR . 'banners');
 
         $file = new Base64File($this->imageService, $image);
         $upload = new UploadService($file);
-        $imageAddress = $upload->upload();
+        $imageAddress = $upload->uploadIndexFile();
 
         return $imageAddress ?? false;
     }
