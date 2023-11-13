@@ -129,14 +129,15 @@ class ImageService extends ImageToolsService
             unlink($imagePath);
             $dirName = dirname($imagePath);
         if (File::allFiles($dirName) === []) {
-            File::deleteDirectory($dirName);
+            File::deleteDirectories($dirName);
         }
         }
     }
 
-    public function deleteIndex($images)
+    public function deleteIndex($directory)
     {
-        $directory = public_path($images['directory']);
+//        $directory = public_path($images['directory']);
+        $directory = dirname($directory);
         $this->deleteDirectoryAndFiles($directory);
     }
 
