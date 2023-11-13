@@ -69,8 +69,10 @@ class BannerService
     }
 
     public function deleteImages($image_path){
-        foreach ($image_path['indexArray'] as $path){
-            $this->imageService->deleteImage($path);
+        if(isset($image_path)) {
+            foreach ($image_path['indexArray'] as $path) {
+                $this->imageService->deleteIndex($path);
+            }
         }
     }
 
