@@ -61,7 +61,7 @@ return [
     ],
     "image"            => ":attribute باید تصویر باشد.",
     "in"               => ":attribute انتخاب شده، معتبر نیست.",
-    "integer"          => ":attribute باید نوع داده ای عددی (integer) باشد.",
+    "integer"          => ":attribute باید به صورت عدد باشد.",
     'in_array'         => 'فیلد :attribute در :other موجود نیست.',
     "ip"               => ":attribute باید IP آدرس معتبر باشد.",
     'ipv4'             => ':attribute باید یک ادرس درست IPv4 باشد.',
