@@ -2,89 +2,51 @@
 
 namespace App\Http\Controllers\Api\V1\Services;
 
-use App\Enums\StatusEnum;
-use App\Http\Requests\BannerRequest;
+use App\Http\Requests\DeliveryRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
-use App\Http\Services\UploadService\Algoritms\Base64FIle;
-use App\Http\Services\UploadService\UploadService;
-use App\Models\Banner;
-use App\Repository\Contracts\BannerRepositoryInterface;
+use App\Models\Delivery;
+use App\Repository\Contracts\DeliveryRepositoryInterface;
 
 class DeliveryService
 {
 
     public function __construct(
         public ImageService                $imageService,
-        public BannerRepositoryInterface $bannerRepository,
+        public DeliveryRepositoryInterface $deliveryRepository,
         public CacheApiService $cacheApiService
     )
     {
     }
 
-    public function getAllBanners()
+    public function getAllDeliverys()
     {
-        if($this->cacheApiService->useCache('banners')){
-            return $this->cacheApiService->cacheApi('banners', $this->bannerRepository->paginate());
+        if($this->cacheApiService->useCache('deliveries')){
+            return $this->cacheApiService->cacheApi('deliveries', $this->deliveryRepository->paginate());
         }
-        return $this->bannerRepository->paginate();
+        return $this->deliveryRepository->paginate();
     }
 
-    public function getDisplayableBanners()
+    public function createDelivery(DeliveryRequest $request)
     {
-        if($this->cacheApiService->useCache('banners')){
-            return $this->cacheApiService->cacheApi('banners',  $this->bannerRepository->displayableBanners());
-        }
-        return $this->bannerRepository->displayableBanners();
+        $this->deliveryRepository->create($request->fields());
     }
 
-    public function searchBanner($value){
-        return $this->bannerRepository->getBannerSearch($value);
-    }
-
-    public function createBanner(BannerRequest $request, $image)
+    public function updateDelivery(DeliveryRequest $request, $deliveryId)
     {
-        $this->bannerRepository->create($request->fields(attributes: [
-            'image_path' => $image
-        ]));
+        return $this->deliveryRepository->update($request->fields(), $deliveryId);
     }
 
-    public function updateBanner(BannerRequest $request, $bannerId, $imageUrl)
+    public function updateDeliveryStatus(Delivery $delivery, $status)
     {
-        return $this->bannerRepository->update($request->fields(attributes: [
-            'image_path' => $imageUrl
-        ]), $bannerId);
-    }
-
-    public function updateBannerStatus(Banner $banner, $status)
-    {
-        return $this->bannerRepository->update([
+        return $this->deliveryRepository->update([
             'status' => (bool)$status
-        ], $banner->id);
+        ], $delivery->id);
     }
 
-    public function deleteBanner($id)
+    public function deleteDelivery($id)
     {
-        return $this->bannerRepository->delete($id);
-    }
-
-    public function deleteImages($image_path){
-        if(isset($image_path)) {
-            foreach ($image_path['indexArray'] as $path) {
-                $this->imageService->deleteIndex($path);
-            }
-        }
-    }
-
-    public function uploadImage($image)
-    {
-        $this->imageService->setExclusiveDirectory('uploads' . DIRECTORY_SEPARATOR . 'banners');
-
-        $file = new Base64File($this->imageService, $image);
-        $upload = new UploadService($file);
-        $imageAddress = $upload->uploadIndexFile();
-
-        return $imageAddress ?? false;
+        return $this->deliveryRepository->delete($id);
     }
 
 }
