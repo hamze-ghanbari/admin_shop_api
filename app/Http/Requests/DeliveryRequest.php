@@ -14,23 +14,21 @@ class DeliveryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:100', new BlackListRule()],
-            'url' => ['required', new BlackListRule()],
-            'start_date' => ['required', 'date_format:Y/m/d'],
-            'end_date' => ['required', 'date_format:Y/m/d'],
-            'image_path' => 'required',
-            'status' => [Rule::in([1, 2])],
+            'name' => ['required', 'max:50', new BlackListRule()],
+            'amount' => 'digits_between:3,7',
+            'delivery_time' => ['bail', 'integer', new BlackListRule()],
+            'delivery_time_unit' => [Rule::in(['سال', 'ماه', 'هفته', 'روز'])],
+            'status' => [Rule::in([0, 1])],
         ];
     }
 
     public function attributes()
     {
         return [
-            'title' => 'عنوان',
-            'url' => 'لینک',
-            'start_date' => 'تاریخ شروع نمایش',
-            'end_date' => 'تاریخ پایان نمایش',
-            'image_path' => 'تصویر',
+            'name' => 'روش ارسال',
+            'amount' => 'مبلغ',
+            'delivery_time' => 'زمان تحویل',
+//            'delivery_time_unit' => 'واحد زمان تحویل',
             'status' => 'وضعیت',
         ];
     }
@@ -38,9 +36,7 @@ class DeliveryRequest extends FormRequest
     public function messages(): array
     {
         return [
-//            'name.regex' => 'نام برند باید به صورت حروف انگلیسی باشد',
-//            'persian_name.regex' => 'نام برند باید به صورت حروف فارسی باشد',
-//            'image.image' => 'فرمت تصویر نامعتبر است'
+            'delivery_time_unit.in' => 'واحد زمان تحویل نامعتبر است'
         ];
     }
 

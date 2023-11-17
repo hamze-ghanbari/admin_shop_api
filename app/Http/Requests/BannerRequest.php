@@ -19,7 +19,7 @@ class BannerRequest extends FormRequest
             'start_date' => ['required', 'date_format:Y/m/d'],
             'end_date' => ['required', 'date_format:Y/m/d'],
             'image_path' => 'required',
-            'status' => [Rule::in([1, 2])],
+            'status' => [Rule::in([0, 1])],
         ];
     }
 

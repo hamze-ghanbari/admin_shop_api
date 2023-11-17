@@ -18,7 +18,7 @@ class BrandRequest extends FormRequest
             'persian_name' => ['required', 'max:50', 'regex:/^([ضصثقفغعهخحجچشسیبلاتنمکگپظطزرذدئو.ء ِ]{1,50})$/'],
             'description' => ['required', 'max:5000', new BlackListRule()],
             'image' => 'required',
-            'status' => [Rule::in([1, 2])],
+            'status' => [Rule::in([0, 1])],
         ];
     }
 
