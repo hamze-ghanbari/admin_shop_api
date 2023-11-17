@@ -2,7 +2,6 @@
 
 namespace App\Http\Services\PolicyService;
 
-use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Gate;
 
 class PolicyService

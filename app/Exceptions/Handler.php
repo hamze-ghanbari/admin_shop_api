@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use BadMethodCallException;
+use Illuminate\Database\Eloquent\RelationNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -37,28 +39,42 @@ class Handler extends ExceptionHandler
             if ($e instanceof NotFoundHttpException) {
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Not Found',
+                    'message' => $e->getMessage(),
                     'hasError' => true,
                     'result' => null
                 ], 404);
             }elseif ($e instanceof RouteNotFoundException){
                 return response()->json([
                     'status' => 500,
-                    'message' => 'Internal Server Error',
+                    'message' => $e->getMessage(),
                     'hasError' => true,
                     'result' => null
                 ], 500);
             }elseif ($e instanceof MethodNotAllowedHttpException){
                 return response()->json([
                     'status' => 405,
-                    'message' => 'Method Not Allowed',
+                    'message' => $e->getMessage(),
                     'hasError' => true,
                     'result' => null
                 ], 405);
             }elseif($e instanceof BadMethodCallException){
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Method Not Found',
+                    'message' => $e->getMessage(),
+                    'hasError' => true,
+                    'result' => null
+                ], 404);
+            }elseif($e instanceof QueryException){
+                return response()->json([
+                    'status' => 500,
+                    'message' => $e->getMessage(),
+                    'hasError' => true,
+                    'result' => null
+                ], 404);
+            }elseif($e instanceof RelationNotFoundException){
+                return response()->json([
+                    'status' => 500,
+                    'message' => $e->getMessage(),
                     'hasError' => true,
                     'result' => null
                 ], 404);
