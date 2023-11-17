@@ -126,9 +126,9 @@ class OtpController extends Controller
 //                    'expireAt' => $expireAt
 //                    'expireAt' => Carbon::parse('$expireAt')->toDateTimeString()
             ]);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            return $this->failedValidationResponse('خطا در برقراری ارتباط', 500);
+            return $this->failedValidationResponse($e->getMessage(), 500);
         }
     }
 
