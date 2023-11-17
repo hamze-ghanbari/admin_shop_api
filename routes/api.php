@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\BannerController;
+use App\Http\Controllers\Api\V1\DeliveryController;
 use App\Http\Controllers\Api\V1\OtpController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\RoleController;
@@ -83,6 +84,10 @@ Route::get('banners/all', [BannerController::class, 'displayableBanners']);
 Route::apiResource('banners', BannerController::class);
 Route::post('banners/search', [BannerController::class, 'searchBanner']);
 Route::get('banners/{banner}/status/{status}', [BannerController::class, 'changeStatus']);
+
+// deliveries
+Route::apiResource('deliveries', DeliveryController::class)->except('show');
+Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 'changeStatus']);
 
 
 Route::fallback((function () {
