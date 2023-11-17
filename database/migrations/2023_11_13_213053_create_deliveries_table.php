@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('delivery', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->decimal('amount', 20, 3)->nullable();
-            $table->integer('delivery_time')->nullable();
-            $table->string('delivery_time_unit')->nullable();
+            $table->integer('amount')->nullable();
+            $table->integer('delivery_time')->default(1);
+            $table->enum('delivery_time_unit', ['سال', 'ماه', 'هفته', 'روز'])->default('روز');
             $table->boolean('status')->default(false);
             $table->timestamps();
             $table->softDeletes();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('delivery');
+        Schema::dropIfExists('deliveries');
     }
 };
