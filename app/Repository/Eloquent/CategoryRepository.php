@@ -2,13 +2,13 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
      public function model(){
-         return Category::class;
+         return CategoryProduct::class;
      }
 
     public function getCategoryWithTrashed($name){

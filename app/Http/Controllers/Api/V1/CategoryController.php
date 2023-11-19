@@ -8,7 +8,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\PolicyService\PolicyService;
-use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Traits\Response\ApiResponse;
 use App\Traits\Response\ValidationResponse;
 use Illuminate\Database\QueryException;
@@ -43,7 +43,7 @@ class CategoryController extends Controller
         return new CategoryCollection($this->categoryService->searchCategory($request->input('search')));
     }
 
-    public function store(CategoryRequest $request, ImageService $imageService)
+    public function store(CategoryRequest $request)
     {
         if (!$this->policyService->authorize(['admin'], ['create-category']))
             return $this->forbiddenResponse();
@@ -52,10 +52,9 @@ class CategoryController extends Controller
             return $this->failedValidationResponse('این دسته بندی قبلا ثبت شده است', 409);
         }
 
-        $type = 'base64';
         $image = $request->input('image');
 
-        $imageAddress = $this->categoryService->uploadImage($image, $type);
+        $imageAddress = $this->categoryService->uploadImage($image);
 
         if (!$imageAddress) {
             return $this->serverError('خطا در آپلود تصویر');
@@ -65,21 +64,20 @@ class CategoryController extends Controller
         return $this->apiResponse(null);
     }
 
-    public function update(CategoryRequest $request, ImageService $imageService, Category $category)
+    public function update(CategoryRequest $request, ImageService $imageService, CategoryProduct $category)
     {
         if (!$this->policyService->authorize(['admin'], ['update-category']))
             return $this->forbiddenResponse();
 
         try {
-            $type = 'base64';
             $image = $request->input('image');
-            $imageAddress = $this->categoryService->uploadImage($image, $type);
+            $imageAddress = $this->categoryService->uploadImage($image);
 
             if (!$imageAddress) {
                 return $this->serverError('خطا در آپلود تصویر');
             }
 
-            $this->categoryService->updateCategory($request, $category->id, '$imageAddress');
+            $this->categoryService->updateCategory($request, $category->id, $imageAddress);
             return $this->apiResponse(null);
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
@@ -90,7 +88,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function changeStatus(Category $category, $status)
+    public function changeStatus(CategoryProduct $category, $status)
     {
         if (!$this->policyService->authorize(['admin'], ['update-category']))
             return $this->forbiddenResponse();
@@ -104,7 +102,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy(ImageService $imageService, Category $category)
+    public function destroy(ImageService $imageService, CategoryProduct $category)
     {
         if (!$this->policyService->authorize(['admin'], ['delete-category']))
             return $this->forbiddenResponse();

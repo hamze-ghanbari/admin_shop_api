@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('category_products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
             $table->text('description');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->boolean('status')->default(false);
             $table->boolean('show_in_menu')->default(false);
-            $table->foreignId('parent_id')->nullable()->constrained('categories');
+            $table->foreignId('parent_id')->nullable()->constrained('category_products');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_products');
     }
 };

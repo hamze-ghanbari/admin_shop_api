@@ -6,7 +6,7 @@ use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
 use App\Models\Banner;
 use App\Models\Brand;
-use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Models\Delivery;
 use App\Models\Mail;
 use App\Models\MailFile;
@@ -14,7 +14,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Observers\BannerObserver;
 use App\Observers\BrandObserver;
-use App\Observers\CategoryObserver;
+use App\Observers\CategoryProductObserver;
 use App\Observers\DeliveryObserver;
 use App\Observers\MailFileObserver;
 use App\Observers\MailObserver;
@@ -27,7 +27,7 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         User::class => [UserObserver::class],
         Role::class => [RoleObserver::class],
-        Category::class => [CategoryObserver::class],
+        CategoryProduct::class => [CategoryProductObserver::class],
         Brand::class => [BrandObserver::class],
         Mail::class => [MailObserver::class],
         MailFile::class => [MailFileObserver::class],

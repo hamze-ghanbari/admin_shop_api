@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Category extends Model
+class CategoryProduct extends Model
 {
-    use SoftDeletes;
+    use  SoftDeletes;
+
+//    protected $table = 'category_products';
 
     protected $guarded = ['id'];
 
@@ -19,9 +22,9 @@ class Category extends Model
         return $this->belongsTo($this, 'parent_id')->with('parent');
     }
 
-    public function children()
+    public function childrens()
     {
-        return $this->hasMany($this, 'parent_id')->with('children');
+        return $this->hasMany($this, 'parent_id')->with('childrens');
     }
 
     protected function slug(): Attribute{
