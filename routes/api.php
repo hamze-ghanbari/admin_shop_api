@@ -52,11 +52,11 @@ Route::controller(RoleController::class)->prefix('roles')->group(function () {
 // permissions ------------------------
 Route::get('permissions', PermissionController::class);
 
-// categories -------------------------
-Route::apiResource('categories', CategoryController::class)->except('show');
-Route::controller(CategoryController::class)->prefix('categories')->group(function () {
+// category_products -------------------------
+Route::apiResource('categoryProduct', CategoryController::class)->except('show');
+Route::controller(CategoryController::class)->prefix('categoryProduct')->group(function () {
     Route::post('search', 'searchCategory');
-    Route::get('{category}/status/{status}', 'changeStatus');
+    Route::get('{categoryProduct}/status/{status}', 'changeStatus');
 });
 
 // brands -------------------------
