@@ -16,6 +16,7 @@ class Mail extends Model
 
     protected $casts = [
         'published_at' => PersianDateCast::class,
+        'status' => 'bool'
     ];
 
     public function user(){

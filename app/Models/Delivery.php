@@ -13,6 +13,8 @@ class Delivery extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = ['status' => 'bool'];
+
     public function scopeSearch(Builder $query, $term = null)
     {
         return $query->when($term, function (Builder $query, $term) {

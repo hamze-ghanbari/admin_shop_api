@@ -15,6 +15,8 @@ class Brand extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = ['status' => 'bool'];
+
 
     protected function slug(): Attribute{
         return Attribute::make(

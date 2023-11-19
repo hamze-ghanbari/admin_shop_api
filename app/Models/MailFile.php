@@ -12,6 +12,8 @@ class MailFile extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = ['status' => 'bool'];
+
     public function mail(){
         return $this->belongsTo(Mail::class);
     }

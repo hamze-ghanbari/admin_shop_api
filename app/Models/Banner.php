@@ -17,7 +17,8 @@ class Banner extends Model
     protected $casts = [
         'start_date' => PersianDateCast::class,
         'end_date' => PersianDateCast::class,
-        'image_path' => 'array'
+        'image_path' => 'array',
+        'status' => 'bool'
     ];
 
 

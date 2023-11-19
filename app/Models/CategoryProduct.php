@@ -17,6 +17,8 @@ class CategoryProduct extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = ['status' => 'bool'];
+
     public function parent()
     {
         return $this->belongsTo($this, 'parent_id')->with('parent');

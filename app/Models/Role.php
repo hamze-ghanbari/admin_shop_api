@@ -13,6 +13,8 @@ class Role extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = ['status' => 'bool'];
+
     public $timestamps = false;
 
 //    public function getCreatedAtAttribute($value)

@@ -44,6 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'mobile_verified_at' => 'datetime',
         'birth_date' => PersianDateCast::class,
+        'status' => 'bool'
     ];
 
 //    protected function createdAt(): Attribute{
