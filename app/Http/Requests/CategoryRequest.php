@@ -19,7 +19,7 @@ class CategoryRequest extends FormRequest
             'image' => 'required',
             'status' => [Rule::in([0,1])],
             'show_in_menu' => [Rule::in([0,1])],
-            'parent_id' => ['nullable', 'exists:categories,id', new BlackListRule()]
+            'parent_id' => ['nullable', 'exists:category_products,id', new BlackListRule()]
         ];
     }
 
