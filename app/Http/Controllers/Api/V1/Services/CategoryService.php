@@ -7,7 +7,7 @@ use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\UploadService\Algoritms\Base64FIle;
 use App\Http\Services\UploadService\UploadService;
-use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 
 class CategoryService
@@ -24,9 +24,9 @@ class CategoryService
     public function getAllCategories()
     {
         if($this->cacheApiService->useCache('categories')){
-            return $this->cacheApiService->cacheApi('categories', $this->categoryRepository->with('parent')->paginate());
+            return $this->cacheApiService->cacheApi('categories', $this->categoryRepository->with(['parent', 'childrens'])->paginate());
         }
-        return $this->categoryRepository->with('parent')->paginate();
+        return $this->categoryRepository->with(['parent', 'childrens'])->paginate();
     }
 
     public function searchCategory($value){
@@ -54,7 +54,7 @@ class CategoryService
         ]), $categoryId);
     }
 
-    public function updateCategoryStatus(Category $category, $status)
+    public function updateCategoryStatus(CategoryProduct $category, $status)
     {
         return $this->categoryRepository->update([
             'show_in_menu' => (bool)$status
@@ -66,9 +66,9 @@ class CategoryService
         return $this->categoryRepository->delete($id);
     }
 
-    public function uploadImage($image, $type = 'file')
+    public function uploadImage($image)
     {
-        $this->imageService->setExclusiveDirectory('uploads' . DIRECTORY_SEPARATOR . 'category_product');
+        $this->imageService->setExclusiveDirectory('uploads' . DIRECTORY_SEPARATOR . 'category_products');
 
         $file = new Base64File($this->imageService, $image);
         $upload = new UploadService($file);
