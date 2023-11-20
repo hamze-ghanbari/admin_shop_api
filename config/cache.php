@@ -103,7 +103,8 @@ return [
         'mails' => true,
         'mailFiles' => true,
         'banners' => true,
-        'deliveries' => true
+        'deliveries' => true,
+        'products' => true
     ],
     /*
     |--------------------------------------------------------------------------
