@@ -11,4 +11,9 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'status' => 'bool',
+        'marketable' => 'bool'
+    ];
 }
