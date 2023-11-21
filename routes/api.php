@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\PermissionController;
 use App\Http\Controllers\Api\V1\BrandController;
 use App\Http\Controllers\Api\V1\MailController;
 use App\Http\Controllers\Api\V1\MailFileController;
+use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // otp --------------------
@@ -88,6 +89,9 @@ Route::get('banners/{banner}/status/{status}', [BannerController::class, 'change
 // deliveries
 Route::apiResource('deliveries', DeliveryController::class)->except('show');
 Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 'changeStatus']);
+
+// products
+Route::apiResource('products', ProductController::class);
 
 
 Route::fallback((function () {
