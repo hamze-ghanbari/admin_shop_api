@@ -6,10 +6,12 @@ use App\Rules\BlackListRule;
 use App\Rules\NationalCodeRule;
 use App\Traits\Response\ValidationResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductRequest extends FormRequest
 {
     use ValidationResponse;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,27 +23,47 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-//            'first_name' => ['max:30', new BlackListRule()],
-//            'last_name' => [ 'max:30', new BlackListRule()],
-//            'national_code' => [new NationalCodeRule()],
-//            'mobile' => config('constants.mobile_regex'),
-//            'email' => config('constants.email_regex'),
-//            'birth_date' => 'date_format:Y/m/d'
+            'name' => ['required', new BlackListRule()],
+            'introduction' => ['required', new BlackListRule()],
+            'weight' => ['required', 'decimal:2', 'digits:10'],
+            'length' => ['required', 'decimal:1', 'digits:10'],
+            'width' => ['required', 'decimal:1', 'digits:10'],
+            'height' => ['required', 'decimal:1', 'digits:10'],
+            'price' => ['required', 'decimal:3', 'digits:20'],
+            'status' => [Rule::in([0, 1])],
+            'marketable' => [Rule::in([0, 1])],
+            'sold_number' => ['numeric', new BlackListRule()],
+            'frozen_number' => ['numeric', new BlackListRule()],
+            'marketable_number' => ['numeric', new BlackListRule()],
+            'brand_id' => ['required', 'integer', 'exists:brands,id'],
+            'category_id' => ['required', 'integer', 'exists:category_products,id'],
+            'published_at' => ['required', 'date_format:Y/m/d']
         ];
     }
 
     public function attributes()
     {
         return [
-//            'first_name' => 'نام',
-//            'last_name' => 'نام خانوادگی',
-//            'national_code' => 'کد ملی',
-//            'mobile' => 'موبایل',
-//            'email' => 'ایمیل',
+            'name' => 'نام محصول',
+            'introduction' => 'توضیحات',
+            'weight' => 'وزن محصول',
+            'length' => 'طول محصول',
+            'width' => 'عرض محصول',
+            'height' => 'ارتفاع محصول',
+            'price' => 'قسمت محصوص',
+            'status' => 'وضعیت محصول',
+            'marketable' => 'قابل فروش بودن',
+            'sold_number' => 'تعداد فروخته شده',
+            'frozen_number' => '',
+            'marketable_number' => 'تعداد قابل فروش',
+            'brand_id' => 'برند محصول',
+            'category_id' => 'دسته بندی محصول',
+            'published_at' => 'تاریخ انتشار',
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
 //            'national_code.required' => 'وارد کردن کد ملی الزامی است',
 //            'birth_date.date_format' => 'فرمت تاریخ معتبر نمی باشد'
