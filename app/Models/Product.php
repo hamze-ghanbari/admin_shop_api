@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,4 +25,12 @@ class Product extends Model
             set: fn () =>  Str::slug($this->attributes['name'])
         );
     }
+
+    public function scopeSearch(Builder $query, $term = null)
+    {
+        return $query->when($term, function (Builder $query, $term) {
+            $query->where('name', 'like', "%{$term}%");
+        });
+    }
+
 }
