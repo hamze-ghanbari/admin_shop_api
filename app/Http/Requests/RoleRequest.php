@@ -34,8 +34,8 @@ class RoleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'نام نقش',
-            'persian_name' => 'نام نقش',
+            'name' => 'نام نقش (انگلیسی)',
+            'persian_name' => 'نام نقش (فارسی)',
             'status' => 'وضعیت نقش'
         ];
     }
