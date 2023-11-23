@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    public static $wrap = 'result';
     /**
      * Transform the resource into an array.
      *
