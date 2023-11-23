@@ -41,7 +41,7 @@ class RoleController extends Controller
         if (!$this->policyService->authorize(['admin'], ['read-role']))
             return $this->forbiddenResponse();
 
-        return new UserCollection($this->roleService->searchRole($request->input('search')));
+        return new RoleCollection($this->roleService->searchRole($request->input('search')));
     }
 
     public function store(RoleRequest $request)
