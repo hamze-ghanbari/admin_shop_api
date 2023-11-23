@@ -25,11 +25,11 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['required', new BlackListRule()],
             'introduction' => ['required', new BlackListRule()],
-            'weight' => ['required', 'decimal:2', 'digits:10'],
-            'length' => ['required', 'decimal:1', 'digits:10'],
-            'width' => ['required', 'decimal:1', 'digits:10'],
-            'height' => ['required', 'decimal:1', 'digits:10'],
-            'price' => ['required', 'decimal:3', 'digits:20'],
+            'weight' => ['required', 'decimal:2', 'digits_between:1,10'],
+            'length' => ['required', 'decimal:1', 'digits_between:1,10'],
+            'width' => ['required', 'decimal:1', 'digits_between:1,10'],
+            'height' => ['required', 'decimal:1', 'digits_between:1,10'],
+            'price' => ['required', 'decimal:3', 'digits_between:1,10'],
             'status' => [Rule::in([0, 1])],
             'marketable' => [Rule::in([0, 1])],
             'sold_number' => ['numeric', new BlackListRule()],
@@ -60,6 +60,16 @@ class ProductRequest extends FormRequest
             'category_id' => 'دسته بندی محصول',
             'published_at' => 'تاریخ انتشار',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'price' => convertNumbersToEnglish($this->price),
+            'sold_number' => convertNumbersToEnglish($this->sold_number),
+            'frozen_number' => convertNumbersToEnglish($this->frozen_number),
+            'marketable_number' => convertNumbersToEnglish($this->marketable_number),
+        ]);
     }
 
     public function messages()
