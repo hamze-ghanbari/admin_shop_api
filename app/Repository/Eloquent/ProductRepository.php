@@ -12,4 +12,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return Product::class;
     }
 
+    public function getProductWithTrashed($name){
+        return $this->getModel()->withTrashed()->where(['name' => $name])->exists();
+    }
+
+    public function getProductSearch($value){
+        return $this->getModel()->search($value)->paginate();
+    }
 }
