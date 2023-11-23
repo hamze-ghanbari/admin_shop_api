@@ -5,21 +5,20 @@ namespace App\Http\Controllers\Api\V1\Services;
 use App\Http\Requests\ProductRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
-use App\Models\Product;
 use App\Repository\Contracts\ProductRepositoryInterface;
+use App\Models\Product;
 
 class ProductService
 {
 
     public function __construct(
-        public ImageService                $imageService,
         public ProductRepositoryInterface $productRepository,
         public CacheApiService $cacheApiService
     )
     {
     }
 
-    public function getAllCategories()
+    public function getAllProducts()
     {
         if($this->cacheApiService->useCache('products')){
             return $this->cacheApiService->cacheApi('products', $this->productRepository->paginate());
@@ -36,15 +35,14 @@ class ProductService
         return $this->productRepository->getProductWithTrashed($name);
     }
 
-    public function createProduct(ProductRequest $request, $image)
+    public function createProduct(ProductRequest $request)
     {
         $this->productRepository->create($request->fields(attributes: [
             'slug' => $request->fields()['name'],
-            'image' => $image
         ]));
     }
 
-    public function updateProduct(ProductRequest $request, $productId, $imageUrl)
+    public function updateProduct(ProductRequest $request, $productId)
     {
         return $this->productRepository->update($request->fields(attributes: [
             'slug' => $request->fields()['name'],
@@ -54,7 +52,7 @@ class ProductService
     public function updateProductStatus(Product $product, $status)
     {
         return $this->productRepository->update([
-            'show_in_menu' => (bool)$status
+            'status' => (bool)$status
         ], $product->id);
     }
 
