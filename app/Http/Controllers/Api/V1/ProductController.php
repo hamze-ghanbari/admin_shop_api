@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\V1\Services\ProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductCollection;
-use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Product;
 use App\Traits\Response\ApiResponse;
@@ -24,7 +23,7 @@ class ProductController extends Controller
     )
     {
         $this->middleware('auth:api');
-        $this->middleware('limiter:product,5')->only('store', 'update', 'changeStatus');
+        $this->middleware('limiter:product,5')->only( 'store', 'update', 'changeStatus');
     }
 
     public function index()
@@ -32,7 +31,7 @@ class ProductController extends Controller
         if (!$this->policyService->authorize(['admin'], ['read-product']))
             return $this->forbiddenResponse();
 
-        return new ProductCollection($this->productService->getAllCategories());
+        return new ProductCollection($this->productService->getAllProducts());
     }
 
     public function searchProduct(Request $request)
@@ -87,7 +86,7 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy(ImageService $imageService, Product $product)
+    public function destroy(Product $product)
     {
         if (!$this->policyService->authorize(['admin'], ['delete-product']))
             return $this->forbiddenResponse();
