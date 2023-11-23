@@ -39,6 +39,7 @@ return [
     'declined_if'      => 'هنگامی که :other، :value است باید با :attribute نپذیرید.',
     "different"        => ":attribute و :other باید متفاوت باشند.",
     "digits"           => ":attribute باید :digits رقم باشد.",
+    "decimal"          => ":attribute باید :decimal رقم اعشار داشته باشد",
     "digits_between"   => ":attribute باید بین :min و :max رقم باشد.",
     'dimensions'       => 'dimensions مربوط به فیلد :attribute اشتباه است.',
     'distinct'         => ':attribute مقدار تکراری دارد.',
