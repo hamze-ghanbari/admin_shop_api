@@ -92,7 +92,7 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 
 // products
 Route::apiResource('products', ProductController::class);
-
+Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
 Route::fallback((function () {
     return response()->json([
