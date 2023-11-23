@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Services\ProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ProductResource;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\Product;
 use App\Traits\Response\ApiResponse;
@@ -40,6 +41,10 @@ class ProductController extends Controller
             return $this->forbiddenResponse();
 
         return new ProductCollection($this->productService->searchProduct($request->input('search')));
+    }
+
+    public function show(Product $product){
+        return $this->apiResponse(new ProductResource($product));
     }
 
     public function store(ProductRequest $request)
