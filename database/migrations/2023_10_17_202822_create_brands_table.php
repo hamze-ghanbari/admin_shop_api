@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('persian_name', 50);
             $table->text('description');
-            $table->string('slug')->unique()->nullable();
+            $table->string('slug')->unique();
             $table->text('image')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
