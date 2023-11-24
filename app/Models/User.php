@@ -77,9 +77,10 @@ class User extends Authenticatable
                     ->orWhere('national_code', 'like', "%{$term}%")
                     ->orWhere('email', 'like', "%{$term}%");
             });
-        })->when($time, function (Builder $query, $time) {
-            $query->where('created_at', '<=', $time);
         });
+//        ->when($time, function (Builder $query, $time) {
+//        $query->where('created_at', '<=', $time);
+//    })
     }
 
 }
