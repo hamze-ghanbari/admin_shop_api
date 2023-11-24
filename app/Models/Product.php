@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\PersianDateCast;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,8 @@ class Product extends Model
 
     protected $casts = [
         'status' => 'bool',
-        'marketable' => 'bool'
+        'marketable' => 'bool',
+        'published_at' => PersianDateCast::class
     ];
 
     protected function slug(): Attribute{
