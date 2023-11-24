@@ -25,11 +25,11 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['required', new BlackListRule()],
             'introduction' => ['required', new BlackListRule()],
-            'weight' => ['required', 'decimal:2', 'digits_between:1,10'],
-            'length' => ['required', 'decimal:1', 'digits_between:1,10'],
-            'width' => ['required', 'decimal:1', 'digits_between:1,10'],
-            'height' => ['required', 'decimal:1', 'digits_between:1,10'],
-            'price' => ['required', 'decimal:3', 'digits_between:1,10'],
+            'weight' => ['required', 'digits_between:1,10'],
+            'length' => ['required', 'digits_between:1,10'],
+            'width' => ['required', 'digits_between:1,10'],
+            'height' => ['required', 'digits_between:1,10'],
+            'price' => ['required', 'digits_between:1,10'],
             'status' => [Rule::in([0, 1])],
             'marketable' => [Rule::in([0, 1])],
             'sold_number' => ['numeric', new BlackListRule()],
@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
             'marketable_number' => ['numeric', new BlackListRule()],
             'brand_id' => ['required', 'integer', 'exists:brands,id'],
             'category_id' => ['required', 'integer', 'exists:category_products,id'],
-            'published_at' => ['required', 'date_format:Y/m/d']
+            'published_at' => ['date_format:Y/m/d']
         ];
     }
 
@@ -50,7 +50,7 @@ class ProductRequest extends FormRequest
             'length' => 'طول محصول',
             'width' => 'عرض محصول',
             'height' => 'ارتفاع محصول',
-            'price' => 'قسمت محصوص',
+            'price' => 'قیمت محصول',
             'status' => 'وضعیت محصول',
             'marketable' => 'قابل فروش بودن',
             'sold_number' => 'تعداد فروخته شده',
