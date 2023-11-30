@@ -44,6 +44,9 @@ class ProductController extends Controller
     }
 
     public function show(Product $product){
+        if (!$this->policyService->authorize(['admin'], ['read-product']))
+            return $this->forbiddenResponse();
+
         return $this->apiResponse(new ProductResource($product));
     }
 
