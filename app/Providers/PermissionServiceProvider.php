@@ -19,15 +19,17 @@ class PermissionServiceProvider extends ServiceProvider
     {
         try {
             Permission::get()->map(function ($permission) {
-            Gate::define('P'.$permission->name, function (User $user) use($permission){
-               return $user->hasPermissionTo($permission);
-            });
+                Gate::define('P' . $permission->name, function (User $user) use ($permission) {
+                    return $user->hasPermissionTo($permission);
+                });
             });
 
-            Role::get()->map(function ($role) {
-                Gate::define('R'.$role->name, function (User $user) use($role){
-                    return $user->hasRole($role);
-                });
+            Role::where('status', 1)->get()->map(function ($role) {
+                if($role->permissions()->toArray()) {
+                    Gate::define('R' . $role->name, function (User $user) use ($role) {
+                        return $user->hasRole($role);
+                    });
+                }
             });
 
         } catch (\Exception $e) {
