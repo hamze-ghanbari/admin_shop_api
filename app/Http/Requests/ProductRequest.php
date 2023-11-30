@@ -65,10 +65,10 @@ class ProductRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'price' => convertNumbersToEnglish($this->price),
-            'sold_number' => convertNumbersToEnglish($this->sold_number),
-            'frozen_number' => convertNumbersToEnglish($this->frozen_number),
-            'marketable_number' => convertNumbersToEnglish($this->marketable_number),
+            'price' => (int) convertNumbersToEnglish($this->price),
+            'sold_number' => (int) convertNumbersToEnglish($this->sold_number),
+            'frozen_number' => (int) convertNumbersToEnglish($this->frozen_number),
+            'marketable_number' => (int) convertNumbersToEnglish($this->marketable_number),
         ]);
     }
 
