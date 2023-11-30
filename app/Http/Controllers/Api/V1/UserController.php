@@ -68,7 +68,6 @@ class UserController extends Controller
 
     public function updateBirthDate(UserRequest $request): JsonResponse
     {
-
         $updated = $this->userService->updateProfile($request->only('birth_date'), $request->user()->id);
         $result = (bool)$updated;
         return $this->apiResponse(null, hasError: !$result);
@@ -76,7 +75,6 @@ class UserController extends Controller
 
     public function updateNationalCode(UserRequest $request): JsonResponse
     {
-
         $nationalCode = $request->only('national_code');
         if (!empty($nationalCode) && $this->userService->notionalCodeExists($nationalCode)) {
             return $this->failedValidationResponse([

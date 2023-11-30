@@ -7,7 +7,6 @@ use App\Http\Services\CacheApiService\CacheApiService;
 use App\Models\User;
 use App\Repository\Contracts\RoleRepositoryInterface;
 use App\Repository\Contracts\UserRepositoryInterface;
-use App\Repository\Eloquent\UserRepository;
 
 class UserService
 {
