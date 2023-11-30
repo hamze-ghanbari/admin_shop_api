@@ -92,6 +92,7 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 
 // products
 Route::apiResource('products', ProductController::class);
+Route::post('products/search', [BannerController::class, 'searchBanner']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
 Route::fallback((function () {
