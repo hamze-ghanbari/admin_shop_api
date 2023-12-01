@@ -17,6 +17,9 @@ class Brand extends Model
 
     protected $casts = ['status' => 'bool'];
 
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 
     protected function slug(): Attribute{
         return Attribute::make(
