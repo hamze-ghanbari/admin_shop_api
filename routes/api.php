@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\DeliveryController;
+use App\Http\Controllers\Api\V1\MetaProductController;
 use App\Http\Controllers\Api\V1\OtpController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\RoleController;
@@ -92,8 +93,14 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 
 // products
 Route::apiResource('products', ProductController::class);
-Route::post('products/search', [BannerController::class, 'searchBanner']);
+Route::post('products/search', [ProductController::class, 'searchProduct']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
+
+// meta products
+Route::apiResource('products.meta', MetaProductController::class)->parameters([
+    'meta' => 'meta'
+]);
+
 
 Route::fallback((function () {
     return response()->json([
