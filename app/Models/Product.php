@@ -22,6 +22,14 @@ class Product extends Model
         'published_at' => PersianDateCast::class
     ];
 
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(CategoryProduct::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
