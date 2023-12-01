@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'edit-brand' => 'ویرایش برند',
             'delete-brand' => 'حذف برند',
             'read-mail' => 'دیدن ایمیل',
-            'create-mail' => 'ایجاد ا یمیل',
+            'create-mail' => 'ایجاد ایمیل',
             'edit-mail' => 'ویرایش ایمیل',
             'delete-mail' => 'حذف ایمیل',
             'read-mail-file' => 'دیدن فایل ایمیل',
@@ -66,7 +66,11 @@ class DatabaseSeeder extends Seeder
             'read-delivery' => 'دیدن روش ارسال ',
             'create-delivery' => 'ایجاد روش  ارسال',
             'edit-delivery' => 'ویرایش روش ارسال',
-            'delete-delivery' => 'حذف روش ارسال'
+            'delete-delivery' => 'حذف روش ارسال',
+            'read-meta-product' => 'دیدن ویژگی محصولات',
+            'create-meta-product' => 'ایجاد ویژگی محصولات',
+            'edit-meta-product' => 'ویرایش ویژگی محصولات',
+            'delete-meta-product' => 'حذف ویژگی محصولات'
         ];
 
         foreach ($permissions as $key => $value) {
@@ -76,7 +80,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        User::factory(10)->create();
+//        User::factory(10)->create();
         // $this->call("OthersTableSeeder");
     }
 
