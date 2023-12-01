@@ -104,7 +104,8 @@ return [
         'mailFiles' => true,
         'banners' => true,
         'deliveries' => true,
-        'products' => true
+        'products' => true,
+        'metaProducts' => true
     ],
     /*
     |--------------------------------------------------------------------------
