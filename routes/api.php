@@ -93,6 +93,8 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 
 // products
 Route::apiResource('products', ProductController::class);
+Route::get('products/{product}/category', [ProductController::class, 'categoryProduct']);
+Route::get('products/{product}/brand', [ProductController::class, 'brandProduct']);
 Route::post('products/search', [ProductController::class, 'searchProduct']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
