@@ -13,6 +13,8 @@ class Permission extends Model
 
     public $timestamps = false;
 
+    protected $casts = ['status' => 'bool'];
+
     public function roles(){
         return $this->belongsToMany(Role::class);
     }
