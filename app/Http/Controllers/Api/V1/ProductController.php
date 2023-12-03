@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Api\V1\Services\ProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\BrandCollection;
+use App\Http\Resources\BrandResource;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Services\PolicyService\PolicyService;
@@ -48,6 +51,20 @@ class ProductController extends Controller
             return $this->forbiddenResponse();
 
         return $this->apiResponse(new ProductResource($product));
+    }
+
+    public function brandProduct(Product $product){
+        if (!$this->policyService->authorize(['admin'], ['read-product', 'read-brand']))
+            return $this->forbiddenResponse();
+
+        return $this->apiResponse(new BrandResource($product->brand));
+    }
+
+    public function categoryProduct(Product $product){
+        if (!$this->policyService->authorize(['admin'], ['read-product', 'read-category']))
+            return $this->forbiddenResponse();
+
+        return $this->apiResponse(new CategoryResource($product->category));
     }
 
     public function store(ProductRequest $request)
