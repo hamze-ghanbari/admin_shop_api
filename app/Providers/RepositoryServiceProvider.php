@@ -8,6 +8,7 @@ use App\Repository\Contracts\CategoryRepositoryInterface;
 use App\Repository\Contracts\DeliveryRepositoryInterface;
 use App\Repository\Contracts\MailFileRepositoryInterface;
 use App\Repository\Contracts\MailRepositoryInterface;
+use App\Repository\Contracts\MetaProductRepositoryInterface;
 use App\Repository\Contracts\OtpRepositoryInterface;
 use App\Repository\Contracts\ProductRepositoryInterface;
 use App\Repository\Contracts\RoleRepositoryInterface;
@@ -18,6 +19,7 @@ use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\DeliveryRepository;
 use App\Repository\Eloquent\MailFileRepository;
 use App\Repository\Eloquent\MailRepository;
+use App\Repository\Eloquent\MetaProductRepository;
 use App\Repository\Eloquent\OtpRepository;
 use App\Repository\Eloquent\ProductRepository;
 use App\Repository\Eloquent\RoleRepository;
@@ -37,7 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider
         MailFileRepositoryInterface::class => MailFileRepository::class,
         BannerRepositoryInterface::class => BannerRepository::class,
         DeliveryRepositoryInterface::class => DeliveryRepository::class,
-        ProductRepositoryInterface::class => ProductRepository::class
+        ProductRepositoryInterface::class => ProductRepository::class,
+        MetaProductRepositoryInterface::class => MetaProductRepository::class
     ];
 
     public function register(): void
