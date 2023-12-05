@@ -30,6 +30,10 @@ class Product extends Model
         return $this->belongsTo(CategoryProduct::class);
     }
 
+    public function metas(){
+        return $this->hasMany(MetaProduct::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
