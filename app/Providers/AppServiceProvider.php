@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\MetaProduct;
 use App\Models\User;
 use App\Observers\UserObserver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Request $request): void
     {
+        Route::model('meta',MetaProduct::class);
+
         JsonResource::withoutWrapping();
 
         Request::macro('fields', function ($guarded = ['id'], $attributes = []) use ($request) {
