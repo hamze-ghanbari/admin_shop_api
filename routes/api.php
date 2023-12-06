@@ -95,13 +95,14 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 Route::apiResource('products', ProductController::class);
 Route::get('products/{product}/category', [ProductController::class, 'categoryProduct']);
 Route::get('products/{product}/brand', [ProductController::class, 'brandProduct']);
+Route::get('products/{product}/metas', [ProductController::class, 'productMetas']);
 Route::post('products/search', [ProductController::class, 'searchProduct']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
 // meta products
 Route::apiResource('products.meta', MetaProductController::class)->parameters([
     'meta' => 'meta'
-]);
+])->except(['index', 'show']);
 
 
 Route::fallback((function () {
