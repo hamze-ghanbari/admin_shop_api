@@ -12,14 +12,14 @@ class MetaProductService
 
     public function __construct(
         public MetaProductRepositoryInterface $metaProductRepository,
-        public CacheApiService $cacheApiService
+        public CacheApiService                $cacheApiService
     )
     {
     }
 
     public function getAllMetaProducts(Product $product)
     {
-        if($this->cacheApiService->useCache('metaProducts')){
+        if ($this->cacheApiService->useCache('metaProducts')) {
             return $this->cacheApiService->cacheApi('metaProducts', $product->metas()->paginate());
         }
         return $product->metas()->paginate();
@@ -27,9 +27,11 @@ class MetaProductService
 
     public function addMetaToProduct(MetaProductRequest $request, $productId)
     {
-        $this->metaProductRepository->create($request->fields(attributes: [
-            'product_id' => $productId
-        ]));
+        $values = $request->fields();
+        foreach ($values as $key => $val) {
+            $values[$key]['product_id'] = $productId;
+        }
+        $this->metaProductRepository->insert($values);
     }
 
     public function updateMetaProduct(MetaProductRequest $request, $productId, $metaProductId)
@@ -42,6 +44,11 @@ class MetaProductService
     public function deleteMetaProduct($metaProductId)
     {
         return $this->metaProductRepository->delete($metaProductId);
+    }
+
+    public function multiDeleteMetaProduct(...$metaProductIds)
+    {
+        return $this->metaProductRepository->delete($metaProductIds);
     }
 
 }
