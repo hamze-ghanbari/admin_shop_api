@@ -8,6 +8,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\MetaProductCollection;
 use App\Http\Resources\MetaProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
@@ -72,7 +73,7 @@ class ProductController extends Controller
         if (!$this->policyService->authorize(['admin'], ['read-product', 'read-meta-product']))
             return $this->forbiddenResponse();
 
-        return $this->apiResponse(new MetaProductResource($product->metas));
+        return $this->apiResponse(new MetaProductCollection($product->metas));
     }
 
     public function store(ProductRequest $request)
