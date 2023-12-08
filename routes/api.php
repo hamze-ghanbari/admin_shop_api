@@ -103,7 +103,7 @@ Route::get('products/{product}/status/{status}', [ProductController::class, 'cha
 Route::apiResource('products.meta', MetaProductController::class)->parameters([
     'meta' => 'meta'
 ])->except(['index', 'show']);
-
+Route::delete('products/{product}/meta', [MetaProductController::class, 'multiDelete']);
 
 Route::fallback((function () {
     return response()->json([
