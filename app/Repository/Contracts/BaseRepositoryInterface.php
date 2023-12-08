@@ -34,6 +34,8 @@ interface BaseRepositoryInterface
 
     public function create(array $attributes);
 
+    public function insert(array $attributes);
+
     public function update(array $attributes, $id);
 
     public function delete($id);
