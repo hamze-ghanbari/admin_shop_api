@@ -12,6 +12,7 @@ use App\Models\MetaProduct;
 use App\Models\Product;
 use App\Traits\Response\ApiResponse;
 use App\Traits\Response\ValidationResponse;
+use Illuminate\Http\Request;
 
 class MetaProductController extends Controller
 {
@@ -23,24 +24,16 @@ class MetaProductController extends Controller
     )
     {
         $this->middleware('auth:api');
-        $this->middleware('limiter:meta,5')->only('store', 'update', 'changeStatus');
+        $this->middleware('limiter:meta,5')->only('store', 'update');
     }
 
-    public function index(Product $product)
-    {
-        if (!$this->policyService->authorize(['admin'], ['read-meta-product']))
-            return $this->forbiddenResponse();
-
-        return new MetaProductCollection($this->metaProductService->getAllMetaProducts($product));
-    }
-
-    public function show(Product $product, MetaProduct $metaProduct)
-    {
-        if (!$this->policyService->authorize(['admin'], ['read-meta-product']))
-            return $this->forbiddenResponse();
-
-        return $this->apiResponse(new MetaProductResource($metaProduct));
-    }
+//    public function index(Product $product)
+//    {
+//        if (!$this->policyService->authorize(['admin'], ['read-meta-product']))
+//            return $this->forbiddenResponse();
+//
+//        return new MetaProductCollection($this->metaProductService->getAllMetaProducts($product));
+//    }
 
     public function store(MetaProductRequest $request, Product $product)
     {
@@ -53,7 +46,7 @@ class MetaProductController extends Controller
 
     public function update(MetaProductRequest $request, Product $product, MetaProduct $metaProduct)
     {
-        if (!$this->policyService->authorize(['admin'], ['update-meta-product']))
+        if (!$this->policyService->authorize(['admin'], ['edit-meta-product']))
             return $this->forbiddenResponse();
 
         $this->metaProductService->updateMetaProduct($request, $product->id, $metaProduct->id);
@@ -68,7 +61,16 @@ class MetaProductController extends Controller
 
         $metaDelete = $this->metaProductService->deleteMetaProduct($metaProduct->id);
 
-        return $this->apiResponse(null, hasError: (bool)$metaDelete);
+        return $this->apiResponse(null, hasError: !(bool)$metaDelete);
+    }
+
+    public function multiDelete(Request $request){
+        if (!$this->policyService->authorize(['admin'], ['delete-meta-product']))
+            return $this->forbiddenResponse();
+
+        $metaDelete = $this->metaProductService->multiDeleteMetaProduct(...$request->ids);
+
+        return $this->apiResponse(null, hasError: !(bool)$metaDelete);
     }
 
 }
