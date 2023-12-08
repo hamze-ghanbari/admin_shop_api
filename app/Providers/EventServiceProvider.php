@@ -10,6 +10,7 @@ use App\Models\CategoryProduct;
 use App\Models\Delivery;
 use App\Models\Mail;
 use App\Models\MailFile;
+use App\Models\MetaProduct;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
@@ -19,6 +20,7 @@ use App\Observers\CategoryProductObserver;
 use App\Observers\DeliveryObserver;
 use App\Observers\MailFileObserver;
 use App\Observers\MailObserver;
+use App\Observers\MetaProductObserver;
 use App\Observers\ProductObserver;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
@@ -35,7 +37,8 @@ class EventServiceProvider extends ServiceProvider
         MailFile::class => [MailFileObserver::class],
         Banner::class => [BannerObserver::class],
         Delivery::class => [DeliveryObserver::class],
-        Product::class => [ProductObserver::class]
+        Product::class => [ProductObserver::class],
+        MetaProduct::class => [MetaProductObserver::class]
     ];
     /**
      * The event to listener mappings for the application.
