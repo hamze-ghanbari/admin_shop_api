@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\BannerController;
+use App\Http\Controllers\Api\V1\ColorProductController;
 use App\Http\Controllers\Api\V1\DeliveryController;
 use App\Http\Controllers\Api\V1\MetaProductController;
 use App\Http\Controllers\Api\V1\OtpController;
@@ -96,6 +97,7 @@ Route::apiResource('products', ProductController::class);
 Route::get('products/{product}/category', [ProductController::class, 'categoryProduct']);
 Route::get('products/{product}/brand', [ProductController::class, 'brandProduct']);
 Route::get('products/{product}/metas', [ProductController::class, 'productMetas']);
+Route::get('products/{product}/colors', [ProductController::class, 'productColors']);
 Route::post('products/search', [ProductController::class, 'searchProduct']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
@@ -104,6 +106,11 @@ Route::apiResource('products.meta', MetaProductController::class)->parameters([
     'meta' => 'meta'
 ])->except(['index', 'show']);
 Route::delete('products/{product}/meta', [MetaProductController::class, 'multiDelete']);
+
+// color products
+Route::apiResource('products.color', ColorProductController::class)
+    ->except(['index', 'show', 'update']);
+
 
 Route::fallback((function () {
     return response()->json([
