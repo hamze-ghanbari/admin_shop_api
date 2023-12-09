@@ -70,7 +70,11 @@ class DatabaseSeeder extends Seeder
             'read-meta-product' => 'دیدن ویژگی محصولات',
             'create-meta-product' => 'ایجاد ویژگی محصولات',
             'edit-meta-product' => 'ویرایش ویژگی محصولات',
-            'delete-meta-product' => 'حذف ویژگی محصولات'
+            'delete-meta-product' => 'حذف ویژگی محصولات',
+            'read-color-product' => 'دیدن رنگ محصولات',
+            'create-color-product' => 'ایجاد رنگ محصولات',
+            'edit-color-product' => 'ویرایش رنگ محصولات',
+            'delete-color-product' => 'حذف رنگ محصولات',
         ];
 
         foreach ($permissions as $key => $value) {
