@@ -105,7 +105,8 @@ return [
         'banners' => true,
         'deliveries' => true,
         'products' => true,
-        'metaProducts' => true
+        'metaProducts' => true,
+        'colorProducts' => true,
     ],
     /*
     |--------------------------------------------------------------------------
