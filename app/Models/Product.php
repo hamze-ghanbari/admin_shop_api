@@ -34,6 +34,10 @@ class Product extends Model
         return $this->hasMany(MetaProduct::class);
     }
 
+    public function colors(){
+        return $this->hasMany(ColorProduct::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
