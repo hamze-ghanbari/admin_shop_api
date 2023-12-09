@@ -7,6 +7,7 @@ use App\Listeners\SendEmailRegistered;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\CategoryProduct;
+use App\Models\ColorProduct;
 use App\Models\Delivery;
 use App\Models\Mail;
 use App\Models\MailFile;
@@ -17,6 +18,7 @@ use App\Models\User;
 use App\Observers\BannerObserver;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryProductObserver;
+use App\Observers\ColorProductObserver;
 use App\Observers\DeliveryObserver;
 use App\Observers\MailFileObserver;
 use App\Observers\MailObserver;
@@ -38,7 +40,8 @@ class EventServiceProvider extends ServiceProvider
         Banner::class => [BannerObserver::class],
         Delivery::class => [DeliveryObserver::class],
         Product::class => [ProductObserver::class],
-        MetaProduct::class => [MetaProductObserver::class]
+        MetaProduct::class => [MetaProductObserver::class],
+        ColorProduct::class => [ColorProductObserver::class]
     ];
     /**
      * The event to listener mappings for the application.
