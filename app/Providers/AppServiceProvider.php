@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ColorProduct;
 use App\Models\MetaProduct;
 use App\Models\User;
 use App\Observers\UserObserver;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Request $request): void
     {
         Route::model('meta',MetaProduct::class);
+        Route::model('color',ColorProduct::class);
 
         JsonResource::withoutWrapping();
 
