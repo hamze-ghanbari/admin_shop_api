@@ -75,6 +75,10 @@ class DatabaseSeeder extends Seeder
             'create-color-product' => 'ایجاد رنگ محصولات',
             'edit-color-product' => 'ویرایش رنگ محصولات',
             'delete-color-product' => 'حذف رنگ محصولات',
+            'read-gallery-product' => 'دیدن گالری محصولات',
+            'create-gallery-product' => 'ایجاد گالری محصولات',
+            'edit-gallery-product' => 'ویرایش گالری محصولات',
+            'delete-gallery-product' => 'حذف گالری محصولات',
         ];
 
         foreach ($permissions as $key => $value) {
