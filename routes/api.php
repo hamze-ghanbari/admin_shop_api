@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\ColorProductController;
 use App\Http\Controllers\Api\V1\DeliveryController;
+use App\Http\Controllers\Api\V1\GalleryProductController;
 use App\Http\Controllers\Api\V1\MetaProductController;
 use App\Http\Controllers\Api\V1\OtpController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -109,6 +110,10 @@ Route::delete('products/{product}/meta', [MetaProductController::class, 'multiDe
 
 // color products
 Route::apiResource('products.color', ColorProductController::class)
+    ->except(['index', 'show', 'update']);
+
+// gallery products
+Route::apiResource('products.gallery', GalleryProductController::class)
     ->except(['index', 'show', 'update']);
 
 
