@@ -38,6 +38,10 @@ class Product extends Model
         return $this->hasMany(ColorProduct::class);
     }
 
+    public function images(){
+        return $this->hasMany(GalleryProduct::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
