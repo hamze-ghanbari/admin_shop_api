@@ -9,6 +9,7 @@ use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ColorProductCollection;
+use App\Http\Resources\GalleryProductCollection;
 use App\Http\Resources\MetaProductCollection;
 use App\Http\Resources\MetaProductResource;
 use App\Http\Resources\ProductCollection;
@@ -82,6 +83,13 @@ class ProductController extends Controller
             return $this->forbiddenResponse();
 
         return $this->apiResponse(new ColorProductCollection($product->colors));
+    }
+
+    public function productGallery(Product $product){
+        if (!$this->policyService->authorize(['admin'], ['read-product', 'read-gallery-product']))
+            return $this->forbiddenResponse();
+
+        return $this->apiResponse(new GalleryProductCollection($product->images));
     }
 
     public function store(ProductRequest $request)
