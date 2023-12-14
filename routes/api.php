@@ -99,6 +99,7 @@ Route::get('products/{product}/category', [ProductController::class, 'categoryPr
 Route::get('products/{product}/brand', [ProductController::class, 'brandProduct']);
 Route::get('products/{product}/metas', [ProductController::class, 'productMetas']);
 Route::get('products/{product}/colors', [ProductController::class, 'productColors']);
+Route::get('products/{product}/gallery', [ProductController::class, 'productGallery']);
 Route::post('products/search', [ProductController::class, 'searchProduct']);
 Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
 
