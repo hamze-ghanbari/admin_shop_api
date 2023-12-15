@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Services\GalleryProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ColorProductRequest;
 use App\Http\Requests\GalleryProductRequest;
+use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\PolicyService\PolicyService;
 use App\Models\ColorProduct;
 use App\Models\GalleryProduct;
@@ -32,18 +33,27 @@ class GalleryProductController extends Controller
         if (!$this->policyService->authorize(['admin'], ['create-gallery-product']))
             return $this->forbiddenResponse();
 
-        $this->galleryProductService->addImageToProduct($request, $product->id);
+        $imageAddress = $this->galleryProductService->uploadFile($request->input('image'));
+        if (!$imageAddress) {
+            return $this->serverError('خطا در آپلود تصویر');
+        }
+
+        $this->galleryProductService->addImageToProduct($imageAddress, $product->id);
         return $this->apiResponse(null);
     }
 
-    public function destroy(Product $product, GalleryProduct $colorProduct)
+    public function destroy(ImageService $imageService, Product $product, GalleryProduct $galleryProduct)
     {
         if (!$this->policyService->authorize(['admin'], ['delete-gallery-product']))
             return $this->forbiddenResponse();
 
-        $metaDelete = $this->galleryProductService->deleteImageProduct($colorProduct->id);
+        $galleryDelete = $this->galleryProductService->deleteImageProduct($galleryProduct->id);
 
-        return $this->apiResponse(null, hasError: !(bool)$metaDelete);
+        if($galleryDelete){
+            $this->galleryProductService->deleteImage($galleryProduct->image);
+        }
+
+        return $this->apiResponse(null, hasError: !(bool)$galleryDelete);
     }
 
 }
