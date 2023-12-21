@@ -95,13 +95,15 @@ Route::get('deliveries/{delivery}/status/{status}', [DeliveryController::class, 
 
 // products
 Route::apiResource('products', ProductController::class);
-Route::get('products/{product}/category', [ProductController::class, 'categoryProduct']);
-Route::get('products/{product}/brand', [ProductController::class, 'brandProduct']);
-Route::get('products/{product}/metas', [ProductController::class, 'productMetas']);
-Route::get('products/{product}/colors', [ProductController::class, 'productColors']);
-Route::get('products/{product}/gallery', [ProductController::class, 'productGallery']);
-Route::post('products/search', [ProductController::class, 'searchProduct']);
-Route::get('products/{product}/status/{status}', [ProductController::class, 'changeStatus']);
+Route::controller(ProductController::class)->prefix('products')->group(function(){
+Route::get('{product}/category','categoryProduct');
+Route::get('{product}/brand', 'brandProduct');
+Route::get('{product}/metas', 'productMetas');
+Route::get('{product}/colors','productColors');
+Route::get('{product}/gallery','productGallery');
+Route::post('search', 'searchProduct');
+Route::get('{product}/status/{status}', 'changeStatus');
+});
 
 // meta products
 Route::apiResource('products.meta', MetaProductController::class)->parameters([
