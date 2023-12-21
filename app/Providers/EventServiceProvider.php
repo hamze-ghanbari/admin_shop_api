@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\UserRegistered;
 use App\Listeners\SendEmailRegistered;
+use App\Models\AttributeCategory;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\CategoryProduct;
@@ -16,6 +17,7 @@ use App\Models\MetaProduct;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
+use App\Observers\AttributeObserver;
 use App\Observers\BannerObserver;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryProductObserver;
@@ -44,7 +46,8 @@ class EventServiceProvider extends ServiceProvider
         Product::class => [ProductObserver::class],
         MetaProduct::class => [MetaProductObserver::class],
         ColorProduct::class => [ColorProductObserver::class],
-        GalleryProduct::class => [GalleryProductObserver::class]
+        GalleryProduct::class => [GalleryProductObserver::class],
+        AttributeCategory::class => [AttributeObserver::class]
     ];
     /**
      * The event to listener mappings for the application.
