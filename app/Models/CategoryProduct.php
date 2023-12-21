@@ -33,6 +33,10 @@ class CategoryProduct extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function attributes(){
+        return $this->hasMany(AttributeCategory::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
