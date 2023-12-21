@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Attribute\AttributeController;
 use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Controllers\Api\V1\Mail\MailController;
 use App\Http\Controllers\Api\V1\Mail\MailFile\MailFileController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Api\V1\Otp\OtpController;
 use App\Http\Controllers\Api\V1\Product\Brand\BrandController;
 use App\Http\Controllers\Api\V1\Product\Category\CategoryController;
 use App\Http\Controllers\Api\V1\Product\Color\ColorProductController;
-use App\Http\Controllers\Api\V1\Product\Delivery\DeliveryController;
+use App\Http\Controllers\Api\V1\Delivery\DeliveryController;
 use App\Http\Controllers\Api\V1\Product\Gallery\GalleryProductController;
 use App\Http\Controllers\Api\V1\Product\Meta\MetaProductController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
@@ -119,6 +120,10 @@ Route::apiResource('products.color', ColorProductController::class)
 Route::apiResource('products.gallery', GalleryProductController::class)
     ->except(['index', 'show', 'update']);
 
+// attribute category
+Route::apiResource('attributes', AttributeController::class)
+    ->except(['show']);
+Route::post('attributes/search', [AttributeController::class, 'searchAttribute']);
 
 Route::fallback((function () {
     return response()->json([
