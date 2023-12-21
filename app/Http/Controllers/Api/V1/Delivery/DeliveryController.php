@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product\Delivery;
+namespace App\Http\Controllers\Api\V1\Delivery;
 
 use App\Http\Requests\DeliveryRequest;
 use App\Http\Resources\DeliveryCollection;
@@ -31,14 +31,14 @@ class DeliveryController extends Controller
 
         return new DeliveryCollection($this->deliveryService->getAllDeliverys());
     }
-
-    public function searchDelivery(Request $request)
-    {
-        if (!$this->policyService->authorize(['admin'], ['read-delivery']))
-            return $this->forbiddenResponse();
-
-        return new DeliveryCollection($this->deliveryService->searchDelivery($request->input('search')));
-    }
+//
+//    public function searchDelivery(Request $request)
+//    {
+//        if (!$this->policyService->authorize(['admin'], ['read-delivery']))
+//            return $this->forbiddenResponse();
+//
+//        return new DeliveryCollection($this->deliveryService->searchDelivery($request->input('search')));
+//    }
 
     public function store(DeliveryRequest $request)
     {

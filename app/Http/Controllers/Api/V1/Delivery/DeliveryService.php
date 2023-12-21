@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product\Delivery;
+namespace App\Http\Controllers\Api\V1\Delivery;
 
 use App\Http\Requests\DeliveryRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
