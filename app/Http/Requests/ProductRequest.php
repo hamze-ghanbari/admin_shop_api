@@ -36,7 +36,7 @@ class ProductRequest extends FormRequest
             'frozen_number' => ['numeric', new BlackListRule()],
             'marketable_number' => ['numeric', new BlackListRule()],
             'brand_id' => ['required', 'integer', 'exists:brands,id'],
-            'category_id' => ['required', 'integer', 'exists:category_products,id'],
+            'category_id' => ['bail', 'required', 'integer', 'exists:category_products,id'],
             'published_at' => ['date_format:Y/m/d']
         ];
     }
