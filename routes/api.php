@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\Api\V1\BannerController;
-use App\Http\Controllers\Api\V1\ColorProductController;
-use App\Http\Controllers\Api\V1\DeliveryController;
-use App\Http\Controllers\Api\V1\GalleryProductController;
-use App\Http\Controllers\Api\V1\MetaProductController;
-use App\Http\Controllers\Api\V1\OtpController;
-use App\Http\Controllers\Api\V1\UserController;
-use App\Http\Controllers\Api\V1\RoleController;
-use App\Http\Controllers\Api\V1\CategoryController;
-use App\Http\Controllers\Api\V1\PermissionController;
-use App\Http\Controllers\Api\V1\BrandController;
-use App\Http\Controllers\Api\V1\MailController;
-use App\Http\Controllers\Api\V1\MailFileController;
-use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\Banner\BannerController;
+use App\Http\Controllers\Api\V1\Mail\MailController;
+use App\Http\Controllers\Api\V1\Mail\MailFileController;
+use App\Http\Controllers\Api\V1\Otp\OtpController;
+use App\Http\Controllers\Api\V1\Product\BrandController;
+use App\Http\Controllers\Api\V1\Product\CategoryController;
+use App\Http\Controllers\Api\V1\Product\ColorProductController;
+use App\Http\Controllers\Api\V1\Product\DeliveryController;
+use App\Http\Controllers\Api\V1\Product\GalleryProductController;
+use App\Http\Controllers\Api\V1\Product\MetaProductController;
+use App\Http\Controllers\Api\V1\Product\ProductController;
+use App\Http\Controllers\Api\V1\User\PermissionController;
+use App\Http\Controllers\Api\V1\User\RoleController;
+use App\Http\Controllers\Api\V1\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 // otp --------------------
