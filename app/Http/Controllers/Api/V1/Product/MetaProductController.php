@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Product;
 
-use App\Http\Controllers\Api\V1\Services\MetaProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MetaProductRequest;
 use App\Http\Resources\MetaProductCollection;

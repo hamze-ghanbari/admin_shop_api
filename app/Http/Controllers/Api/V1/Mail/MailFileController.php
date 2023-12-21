@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Mail;
 
-use App\Http\Controllers\Api\V1\Services\MailFileService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MailFileRequest;
 use App\Http\Resources\MailFileCollection;

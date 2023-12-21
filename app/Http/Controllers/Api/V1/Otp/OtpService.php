@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Services;
+namespace App\Http\Controllers\Api\V1\Otp;
 
 use App\Enums\ActivationEnum;
 use App\Enums\StatusEnum;
@@ -18,7 +18,6 @@ use App\Repository\Contracts\UserRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class OtpService
 {

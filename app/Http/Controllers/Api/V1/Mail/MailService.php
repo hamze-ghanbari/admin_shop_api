@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Services;
+namespace App\Http\Controllers\Api\V1\Mail;
 
 use App\Http\Requests\MailRequest;
 use App\Http\Services\CacheApiService\CacheApiService;

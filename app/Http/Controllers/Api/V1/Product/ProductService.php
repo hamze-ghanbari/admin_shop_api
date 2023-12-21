@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Services;
+namespace App\Http\Controllers\Api\V1\Product;
 
 use App\Http\Requests\ProductRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
-use App\Http\Services\ImageService\ImageService;
 use App\Repository\Contracts\ProductRepositoryInterface;
 use App\Models\Product;
 

@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Product;
 
-use App\Http\Controllers\Api\V1\Services\ColorProductService;
-use App\Http\Controllers\Api\V1\Services\GalleryProductService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ColorProductRequest;
 use App\Http\Requests\GalleryProductRequest;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\PolicyService\PolicyService;
-use App\Models\ColorProduct;
 use App\Models\GalleryProduct;
 use App\Models\Product;
 use App\Traits\Response\ApiResponse;

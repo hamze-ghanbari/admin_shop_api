@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Product;
 
-use App\Http\Controllers\Api\V1\Services\DeliveryService;
 use App\Http\Requests\DeliveryRequest;
 use App\Http\Resources\DeliveryCollection;
 use App\Http\Services\ImageService\ImageService;

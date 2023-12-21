@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\User;
 
-use App\Http\Controllers\Api\V1\Services\RoleService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
 use App\Http\Resources\PermissionCollection;

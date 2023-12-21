@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Services;
+namespace App\Http\Controllers\Api\V1\Product;
 
-use App\Http\Requests\ColorProductRequest;
-use App\Http\Requests\GalleryProductRequest;
-use App\Http\Requests\MetaProductRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
 use App\Http\Services\ImageService\ImageService;
 use App\Http\Services\UploadService\Algoritms\Base64File;
 use App\Http\Services\UploadService\UploadService;
-use App\Models\Product;
-use App\Repository\Contracts\ColorProductRepositoryInterface;
 use App\Repository\Contracts\GalleryProductRepositoryInterface;
-use App\Repository\Contracts\MetaProductRepositoryInterface;
-use Illuminate\Support\Facades\File;
 
 class GalleryProductService
 {

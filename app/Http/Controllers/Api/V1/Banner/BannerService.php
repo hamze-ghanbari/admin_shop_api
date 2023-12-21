@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Services;
+namespace App\Http\Controllers\Api\V1\Banner;
 
 use App\Enums\StatusEnum;
 use App\Http\Requests\BannerRequest;

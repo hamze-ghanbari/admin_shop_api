@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Banner;
 
-use App\Http\Controllers\Api\V1\Services\BannerService;
 use App\Http\Requests\BannerRequest;
 use App\Http\Resources\BannerCollection;
 use App\Http\Resources\BannerResource;

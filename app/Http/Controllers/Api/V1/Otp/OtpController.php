@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Otp;
 
 use App\Enums\TypeEnum;
-use App\Events\UserRegistered;
-use App\Http\Controllers\Api\V1\Services\OtpService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConfirmOtpRequest;
 use App\Http\Requests\OtpRequest;

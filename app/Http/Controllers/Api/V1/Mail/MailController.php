@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Mail;
 
-use App\Http\Controllers\Api\V1\Services\MailService;
 use App\Http\Resources\MailCollection;
 use App\Http\Resources\MailResource;
 use App\Http\Services\PolicyService\PolicyService;

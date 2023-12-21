@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Product;
 
-use App\Http\Controllers\Api\V1\Services\ColorProductService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ColorProductRequest;
 use App\Http\Services\PolicyService\PolicyService;
