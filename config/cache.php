@@ -108,6 +108,7 @@ return [
         'metaProducts' => true,
         'colorProducts' => true,
         'galleryProducts' => true,
+        'attributes' => true
     ],
     /*
     |--------------------------------------------------------------------------
