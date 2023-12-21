@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product;
+namespace App\Http\Controllers\Api\V1\Product\Color;
 
 use App\Http\Requests\ColorProductRequest;
 use App\Http\Requests\MetaProductRequest;

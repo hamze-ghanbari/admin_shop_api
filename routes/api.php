@@ -2,17 +2,17 @@
 
 use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Controllers\Api\V1\Mail\MailController;
-use App\Http\Controllers\Api\V1\Mail\MailFileController;
+use App\Http\Controllers\Api\V1\Mail\MailFile\MailFileController;
 use App\Http\Controllers\Api\V1\Otp\OtpController;
-use App\Http\Controllers\Api\V1\Product\BrandController;
-use App\Http\Controllers\Api\V1\Product\CategoryController;
-use App\Http\Controllers\Api\V1\Product\ColorProductController;
-use App\Http\Controllers\Api\V1\Product\DeliveryController;
-use App\Http\Controllers\Api\V1\Product\GalleryProductController;
-use App\Http\Controllers\Api\V1\Product\MetaProductController;
+use App\Http\Controllers\Api\V1\Product\Brand\BrandController;
+use App\Http\Controllers\Api\V1\Product\Category\CategoryController;
+use App\Http\Controllers\Api\V1\Product\Color\ColorProductController;
+use App\Http\Controllers\Api\V1\Product\Delivery\DeliveryController;
+use App\Http\Controllers\Api\V1\Product\Gallery\GalleryProductController;
+use App\Http\Controllers\Api\V1\Product\Meta\MetaProductController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
-use App\Http\Controllers\Api\V1\User\PermissionController;
-use App\Http\Controllers\Api\V1\User\RoleController;
+use App\Http\Controllers\Api\V1\User\Permission\PermissionController;
+use App\Http\Controllers\Api\V1\User\Role\RoleController;
 use App\Http\Controllers\Api\V1\User\UserController;
 use Illuminate\Support\Facades\Route;
 

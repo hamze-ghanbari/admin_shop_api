@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product;
+namespace App\Http\Controllers\Api\V1\Product\Brand;
 
 use App\Http\Requests\BrandRequest;
 use App\Http\Services\CacheApiService\CacheApiService;

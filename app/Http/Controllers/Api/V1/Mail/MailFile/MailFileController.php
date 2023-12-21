@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Mail;
+namespace App\Http\Controllers\Api\V1\Mail\MailFile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MailFileRequest;

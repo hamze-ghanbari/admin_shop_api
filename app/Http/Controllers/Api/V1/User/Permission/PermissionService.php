@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\User;
+namespace App\Http\Controllers\Api\V1\User\Permission;
 
 use App\Http\Services\CacheApiService\CacheApiService;
 use App\Models\Permission;

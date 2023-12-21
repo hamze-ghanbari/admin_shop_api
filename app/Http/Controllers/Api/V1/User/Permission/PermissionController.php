@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\User;
+namespace App\Http\Controllers\Api\V1\User\Permission;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionCollection;

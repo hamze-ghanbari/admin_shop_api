@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product;
+namespace App\Http\Controllers\Api\V1\Product\Meta;
 
 use App\Http\Requests\MetaProductRequest;
 use App\Http\Services\CacheApiService\CacheApiService;

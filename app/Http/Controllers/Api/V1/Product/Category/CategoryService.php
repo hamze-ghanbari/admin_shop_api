@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Product;
+namespace App\Http\Controllers\Api\V1\Product\Category;
 
 use App\Http\Requests\CategoryRequest;
 use App\Http\Services\CacheApiService\CacheApiService;
