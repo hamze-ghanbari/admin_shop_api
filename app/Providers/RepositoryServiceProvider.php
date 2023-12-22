@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\AttributeCategory;
 use App\Repository\Contracts\AttributeRepositoryInterface;
+use App\Repository\Contracts\AttributeValueRepositoryInterface;
 use App\Repository\Contracts\BannerRepositoryInterface;
 use App\Repository\Contracts\BrandRepositoryInterface;
 use App\Repository\Contracts\CategoryRepositoryInterface;
@@ -18,6 +19,7 @@ use App\Repository\Contracts\ProductRepositoryInterface;
 use App\Repository\Contracts\RoleRepositoryInterface;
 use App\Repository\Contracts\UserRepositoryInterface;
 use App\Repository\Eloquent\AttributeRepository;
+use App\Repository\Eloquent\AttributeValueRepository;
 use App\Repository\Eloquent\BannerRepository;
 use App\Repository\Eloquent\BrandRepository;
 use App\Repository\Eloquent\CategoryRepository;
@@ -50,7 +52,8 @@ class RepositoryServiceProvider extends ServiceProvider
         MetaProductRepositoryInterface::class => MetaProductRepository::class,
         ColorProductRepositoryInterface::class => ColorProductRepository::class,
         GalleryProductRepositoryInterface::class => GalleryProductRepository::class,
-        AttributeRepositoryInterface::class => AttributeRepository::class
+        AttributeRepositoryInterface::class => AttributeRepository::class,
+        AttributeValueRepositoryInterface::class => AttributeValueRepository::class
     ];
 
     public function register(): void
