@@ -42,6 +42,10 @@ class Product extends Model
         return $this->hasMany(GalleryProduct::class);
     }
 
+    public function values(){
+        return $this->hasMany(AttributeValueCategory::class);
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
