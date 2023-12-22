@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\AttributeCategory;
 use App\Models\ColorProduct;
 use App\Models\GalleryProduct;
 use App\Models\MetaProduct;
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Route::model('meta',MetaProduct::class);
         Route::model('color',ColorProduct::class);
         Route::model('gallery',GalleryProduct::class);
+        Route::model('attribute',AttributeCategory::class);
 
         JsonResource::withoutWrapping();
 
