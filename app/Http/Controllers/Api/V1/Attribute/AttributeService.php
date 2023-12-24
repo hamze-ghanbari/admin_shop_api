@@ -21,9 +21,9 @@ class AttributeService
     public function getAllAttributes()
     {
         if($this->cacheApiService->useCache('attributes')){
-            return $this->cacheApiService->cacheApi('attributes', $this->attributeRepository->paginate());
+            return $this->cacheApiService->cacheApi('attributes', $this->attributeRepository->with('category')->paginate());
         }
-        return $this->attributeRepository->paginate();
+        return $this->attributeRepository->with('category')->paginate();
     }
 
     public function searchAttribute($value){
