@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Attribute\AttributeController;
+use App\Http\Controllers\Api\V1\Attribute\Value\AttributeValueController;
 use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Controllers\Api\V1\Mail\MailController;
 use App\Http\Controllers\Api\V1\Mail\MailFile\MailFileController;
@@ -124,6 +125,11 @@ Route::apiResource('products.gallery', GalleryProductController::class)
 Route::apiResource('attributes', AttributeController::class)
     ->except(['show']);
 Route::post('attributes/search', [AttributeController::class, 'searchAttribute']);
+
+Route::apiResource('attributes.value', AttributeValueController::class)->except(['show'])->parameters([
+    'value' => 'attributeValueCategory'
+]);
+Route::get('attributes/{attribute}/value/products', [AttributeValueController::class, 'getAttributeProducts']);
 
 Route::fallback((function () {
     return response()->json([
