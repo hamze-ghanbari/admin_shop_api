@@ -17,6 +17,10 @@ class AttributeCategory extends Model
         return $this->belongsTo(CategoryProduct::class);
     }
 
+    public function values(){
+        return $this->hasMany(AttributeValueCategory::class);
+    }
+
     public function scopeSearch(Builder $query, $term = null)
     {
         return $query->when($term, function (Builder $query, $term) {
