@@ -24,4 +24,10 @@ class CacheApiService
     {
         Cache::forget($key);
     }
+
+    public function clearCache($key){
+        if($this->hasCache($key)){
+            $this->forgetCacheApi($key);
+        }
+    }
 }
