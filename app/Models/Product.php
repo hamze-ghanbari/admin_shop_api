@@ -46,6 +46,11 @@ class Product extends Model
         return $this->hasMany(AttributeValueCategory::class);
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     protected function slug(): Attribute{
         return Attribute::make(
             set: fn () =>  Str::slug($this->attributes['name'])
