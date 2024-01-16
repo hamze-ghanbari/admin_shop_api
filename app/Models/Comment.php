@@ -17,4 +17,13 @@ class Comment extends Model
         'status' => 'bool',
         'approved' => 'bool'
     ];
+
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
