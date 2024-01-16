@@ -9,6 +9,7 @@ use App\Repository\Contracts\BannerRepositoryInterface;
 use App\Repository\Contracts\BrandRepositoryInterface;
 use App\Repository\Contracts\CategoryRepositoryInterface;
 use App\Repository\Contracts\ColorProductRepositoryInterface;
+use App\Repository\Contracts\CommentProductRepositoryInterface;
 use App\Repository\Contracts\DeliveryRepositoryInterface;
 use App\Repository\Contracts\GalleryProductRepositoryInterface;
 use App\Repository\Contracts\MailFileRepositoryInterface;
@@ -24,6 +25,7 @@ use App\Repository\Eloquent\BannerRepository;
 use App\Repository\Eloquent\BrandRepository;
 use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\ColorProductRepository;
+use App\Repository\Eloquent\CommentProductRepository;
 use App\Repository\Eloquent\DeliveryRepository;
 use App\Repository\Eloquent\GalleryProductRepository;
 use App\Repository\Eloquent\MailFileRepository;
@@ -53,7 +55,8 @@ class RepositoryServiceProvider extends ServiceProvider
         ColorProductRepositoryInterface::class => ColorProductRepository::class,
         GalleryProductRepositoryInterface::class => GalleryProductRepository::class,
         AttributeRepositoryInterface::class => AttributeRepository::class,
-        AttributeValueRepositoryInterface::class => AttributeValueRepository::class
+        AttributeValueRepositoryInterface::class => AttributeValueRepository::class,
+        CommentProductRepositoryInterface::class => CommentProductRepository::class
     ];
 
     public function register(): void
