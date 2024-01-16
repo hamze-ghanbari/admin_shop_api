@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasMany(Mail::class);
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function scopeSearch(Builder $query, $term = null, $time = null)
     {
         return $query->when($term, function (Builder $query, $term) {
