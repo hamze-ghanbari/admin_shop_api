@@ -16,9 +16,7 @@ class CommentObserver
      */
     public function created(Comment $comment): void
     {
-        if ($this->cacheApiService->hasCache('comment')) {
-            $this->cacheApiService->forgetCacheApi('comment');
-        }
+        $this->cacheApiService->clearCache('comment');
     }
 
     /**
@@ -26,9 +24,7 @@ class CommentObserver
      */
     public function updated(Comment $comment): void
     {
-        if ($this->cacheApiService->hasCache('comment')) {
-            $this->cacheApiService->forgetCacheApi('comment');
-        }
+        $this->cacheApiService->clearCache('comment');
     }
 
     /**
@@ -36,9 +32,7 @@ class CommentObserver
      */
     public function deleted(Comment $comment): void
     {
-        if ($this->cacheApiService->hasCache('comment')) {
-            $this->cacheApiService->forgetCacheApi('comment');
-        }
+        $this->cacheApiService->clearCache('comment');
     }
 
     /**
@@ -46,9 +40,7 @@ class CommentObserver
      */
     public function restored(Comment $comment): void
     {
-        if ($this->cacheApiService->hasCache('comment')) {
-            $this->cacheApiService->forgetCacheApi('comment');
-        }
+        $this->cacheApiService->clearCache('comment');
     }
 
     /**
@@ -56,8 +48,6 @@ class CommentObserver
      */
     public function forceDeleted(Comment $comment): void
     {
-        if ($this->cacheApiService->hasCache('comment')) {
-            $this->cacheApiService->forgetCacheApi('comment');
-        }
+         $this->cacheApiService->clearCache('comment');
     }
 }
