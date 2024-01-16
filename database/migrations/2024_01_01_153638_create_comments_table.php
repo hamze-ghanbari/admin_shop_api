@@ -16,12 +16,14 @@ return new class extends Migration
                 $table->text('body');
                 $table->foreignId('parent_id')->nullable()->constrained('comments');
                 $table->foreignId('user_id')->constrained('users');
-                $table->unsignedBigInteger('commentable_id');
-                $table->string('commentable_type');
+                $table->morphs('commentable');
+//                $table->unsignedBigInteger('commentable_id');
+//                $table->string('commentable_type');
                 $table->boolean('seen')->default(false);
                 $table->boolean('approved')->default(false);
                 $table->boolean('status')->default(false);
                 $table->timestamps();
+                $table->softDeletes();
         });
     }
 
