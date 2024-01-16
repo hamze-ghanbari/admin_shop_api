@@ -10,8 +10,8 @@ use App\Http\Controllers\Api\V1\Product\Brand\BrandController;
 use App\Http\Controllers\Api\V1\Product\Category\CategoryController;
 use App\Http\Controllers\Api\V1\Product\Color\ColorProductController;
 use App\Http\Controllers\Api\V1\Delivery\DeliveryController;
+use App\Http\Controllers\Api\V1\Product\Comment\CommentProductController;
 use App\Http\Controllers\Api\V1\Product\Gallery\GalleryProductController;
-use App\Http\Controllers\Api\V1\Product\Meta\MetaProductController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
 use App\Http\Controllers\Api\V1\User\Permission\PermissionController;
 use App\Http\Controllers\Api\V1\User\Role\RoleController;
@@ -108,10 +108,10 @@ Route::get('{product}/status/{status}', 'changeStatus');
 });
 
 // meta products
-Route::apiResource('products.meta', MetaProductController::class)->parameters([
+Route::apiResource('products.meta', CommentProductController::class)->parameters([
     'meta' => 'meta'
 ])->except(['index', 'show']);
-Route::delete('products/{product}/meta', [MetaProductController::class, 'multiDelete']);
+Route::delete('products/{product}/meta', [CommentProductController::class, 'multiDelete']);
 
 // color products
 Route::apiResource('products.color', ColorProductController::class)
@@ -126,10 +126,19 @@ Route::apiResource('attributes', AttributeController::class)
     ->except(['show']);
 Route::post('attributes/search', [AttributeController::class, 'searchAttribute']);
 
+// attribute value category
 Route::apiResource('attributes.value', AttributeValueController::class)->except(['show'])->parameters([
     'value' => 'attributeValueCategory'
 ]);
 Route::get('attributes/{attribute}/value/products', [AttributeValueController::class, 'getAttributeProducts']);
+
+// comment products
+Route::apiResource('products.comments', CommentProductController::class);
+Route::prefix('products/{product}/comments/{comment}')->controller(CommentProductController::class)->group(function(){
+   Route::get('approved/{approved}', 'approved');
+   Route::get('status/{status}', 'status');
+   Route::post('answer', 'answer');
+});
 
 Route::fallback((function () {
     return response()->json([
