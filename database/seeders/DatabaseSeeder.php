@@ -83,6 +83,10 @@ class DatabaseSeeder extends Seeder
             'create-attribute' => 'ایجاد فرم دسته بندی ها',
             'update-attribute' => 'ویرایش فرم دسته بندی ها',
             'delete-attribute' => 'حذف فرم دسته بندی ها',
+            'read-comment-product' => 'دیدن نظرات محصول',
+            'create-comment-product' => 'ایجاد نظرات محصول',
+            'update-comment-product' => 'ویرایش نظرات محصول',
+            'delete-comment-product' => 'حذف نظرات محصول',
         ];
 
         foreach ($permissions as $key => $value) {
