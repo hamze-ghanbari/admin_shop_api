@@ -6,13 +6,13 @@ use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Controllers\Api\V1\Mail\MailController;
 use App\Http\Controllers\Api\V1\Mail\MailFile\MailFileController;
 use App\Http\Controllers\Api\V1\Otp\OtpController;
-use App\Http\Controllers\Api\V1\Product\Brand\BrandController;
 use App\Http\Controllers\Api\V1\Product\Category\CategoryController;
 use App\Http\Controllers\Api\V1\Product\Color\ColorProductController;
 use App\Http\Controllers\Api\V1\Delivery\DeliveryController;
 use App\Http\Controllers\Api\V1\Product\Comment\CommentProductController;
 use App\Http\Controllers\Api\V1\Product\Gallery\GalleryProductController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
+use App\Http\Controllers\Api\V1\Product\Store\StoreController;
 use App\Http\Controllers\Api\V1\User\Permission\PermissionController;
 use App\Http\Controllers\Api\V1\User\Role\RoleController;
 use App\Http\Controllers\Api\V1\User\UserController;
@@ -66,8 +66,8 @@ Route::controller(CategoryController::class)->prefix('categoryProduct')->group(f
 });
 
 // brands -------------------------
-Route::apiResource('brands', BrandController::class)->except('show');
-Route::controller(BrandController::class)->prefix('brands')->group(function () {
+Route::apiResource('brands', StoreController::class)->except('show');
+Route::controller(StoreController::class)->prefix('brands')->group(function () {
     Route::post('search', 'searchBrand');
     Route::get('{brand}/status/{status}', 'changeStatus');
 });
@@ -105,6 +105,13 @@ Route::get('{product}/colors','productColors');
 Route::get('{product}/gallery','productGallery');
 Route::post('search', 'searchProduct');
 Route::get('{product}/status/{status}', 'changeStatus');
+
+});
+
+// store
+Route::controller(StoreController::class)->group(function() {
+    Route::post('products/{product}/store', 'store');
+    Route::post('products/{product}/update', 'update');
 });
 
 // meta products
@@ -139,6 +146,8 @@ Route::prefix('products/{product}/comments/{comment}')->controller(CommentProduc
    Route::get('status/{status}', 'status');
    Route::post('answer', 'answer');
 });
+
+
 
 Route::fallback((function () {
     return response()->json([
