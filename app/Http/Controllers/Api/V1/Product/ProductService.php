@@ -36,7 +36,7 @@ class ProductService
 
     public function createProduct(ProductRequest $request)
     {
-        $this->productRepository->create($request->fields(attributes: [
+        $this->productRepository->create($request->fields(['sold_number', 'frozen_number'], [
             'slug' => $request->fields()['name'],
         ]));
     }
